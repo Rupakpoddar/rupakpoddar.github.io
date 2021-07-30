@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RPi Public Server</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/Rupakpoddar/rupakpoddar.github.io/main/Assets/ServerIcon.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#03232E">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Rupak Poddar" />
+    <script>
+      window.onload = function () {
+        var xhttp = new XMLHttpRequest();
+
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("uptime").innerHTML = "Uptime: "+String(this.responseText);
+          } /* else {
+            document.getElementById("uptime").innerHTML = "Server Down";
+          } */
+        }
+
+        xhttp.open("GET", "getUptime", true);
+        xhttp.send();
+      }
+
+      function sendData(lednum, ledval){
+        var xhttp = new XMLHttpRequest();
+        /*
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("LEDState").innerHTML = this.responseText;
+          }
+        */
+        xhttp.open("GET", "setLED?LEDNUM="+lednum+"&LEDVAL="+ledval, true);
+        xhttp.send();
+      }
+
+      setInterval(function() { getData(); }, 2000);
+
+      function getData() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            var obj = JSON.parse(this.responseText);
+            if (obj.Device1 == "1"){
+              document.getElementById('button1').style.boxShadow = '0 0 0px 10px rgba(128, 128, 128, 1)';
+              document.getElementById('button2').style.boxShadow = 'none';
+            } else {
+              document.getElementById('button1').style.boxShadow = 'none';
+              document.getElementById('button2').style.boxShadow = '0 0 0px 10px rgba(128, 128, 128, 1)';
+            }
+            if (obj.Device2 == "1"){
+              document.getElementById('button3').style.boxShadow = '0 0 0px 10px rgba(128, 128, 128, 1)';
+              document.getElementById('button4').style.boxShadow = 'none';
+            } else {
+              document.getElementById('button3').style.boxShadow = 'none';
+              document.getElementById('button4').style.boxShadow = '0 0 0px 10px rgba(128, 128, 128, 1)';
+            }
+            if (obj.Device3 == "1"){
+              document.getElementById('button5').style.boxShadow = '0 0 0px 10px rgba(128, 128, 128, 1)';
+              document.getElementById('button6').style.boxShadow = 'none';
+            } else {
+              document.getElementById('button5').style.boxShadow = 'none';
+              document.getElementById('button6').style.boxShadow = '0 0 0px 10px rgba(128, 128, 128, 1)';
+            }
+            if (obj.Device4 == "1"){
+              document.getElementById('button7').style.boxShadow = '0 0 0px 10px rgba(128, 128, 128, 1)';
+              document.getElementById('button8').style.boxShadow = 'none';
+            } else {
+              document.getElementById('button7').style.boxShadow = 'none';
+              document.getElementById('button8').style.boxShadow = '0 0 0px 10px rgba(128, 128, 128, 1)';
+            }
+            document.getElementById("ADCValue").innerHTML = "Button Input: "+String(obj.adcValue);
+          }
+        };
+        xhttp.open("GET", "getStatus", true);
+        xhttp.send();
+      }
+    </script>
+    <style>
+    @font-face {
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/productsans/v5/HYvgU2fE2nRJvZ5JFAumwegdm0LZdjqr5-oayXSOefg.woff2) format('woff2');
+      }
+
+    .button {
+      font-family: Product Sans Bold;
+      font-weight: 900;
+      border: none;
+      padding: 12px 12px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 2vw;
+      margin: auto;
+      cursor: pointer;
+      width: 7.5vw;
+      height: 7.5vw;
+      border-radius: 50%;
+      border: 3px solid lightgray;
+      background-color: white;
+      color: lightgray;
+      transition: 0.5s ease;
+      }
+
+      .button1:hover{
+        width: 10vw;
+        border-radius: 50px;
+        background-color: #37BC61;
+        border: 3px solid #329555;
+        color: white;
+      }
+
+      .button2:hover{
+        width: 10vw;
+        border-radius: 50px;
+        background-color: orange;
+        border: 3px solid darkorange;
+        color: white;
+      }
+
+      .label {
+        font-family: Product Sans;
+        text-align: center;
+        margin: auto;
+      }
+
+      .label1{
+        font-size: 3vw;
+        display: block;
+        padding: 10px 0px;
+        width: 100%;
+        color: lightgray;
+        background: white;
+        border-radius: 2px;
+        transition: 0.5s ease;
+      }
+
+      .label1:hover{
+        color: #3CB371;
+      }
+
+      .label2{
+        color: gray;
+        font-size: 2vw;
+      }
+
+      .label3{
+        font-size: 2.5vw;
+        display: block;
+        padding: 10px 0px;
+        width: 100%;
+        color: gray;
+        background: white;
+        border-radius: 2px;
+      }
+
+      ::placeholder {             /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: lightgray;
+        opacity: 1;               /* Firefox */
+      }
+
+      :-ms-input-placeholder {    /* Internet Explorer 10-11 */
+        color: lightgray;
+      }
+
+      ::-ms-input-placeholder {   /* Microsoft Edge */
+        color: lightgray;
+      }
+
+      .grid-container-2 {
+        padding-bottom: 25px;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        grid-gap: 25px;
+      }
+
+      .grid-container-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 25px;
+      }
+
+      div {
+        /* border:5px solid black; */
+      }
+
+      br {
+        display: block;
+        margin: 25px 0;
+        content: "";
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus,
+      button:focus {
+        outline: none;
+      }
+
+      a{
+        font-size: 1vw;
+        color: darkgrey;
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+
+      a:hover{
+        color: #3CB371;
+      }
+
+      html{
+        padding-right: 17px;
+        vertical-align: baseline;
+        outline: 0;
+        margin: 0;
+        position: absolute;
+        left: 50%;
+        -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
+        width: 50%;
+        font-family: Product Sans;
+        /* border: 5px solid green; */
+        background-color: white;
+        overflow-x: hidden;
+      }
+      body{
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+      }
+
+      @media only screen and (max-width: 800px){       /* 800 */
+        html {
+          width: 90%;
+        }
+        .button {
+          width: 16vw;
+          height: 16vw;
+          font-size: 5vw;
+          text-align: center;
+        }
+        .button:hover {
+          width: 20vw;
+        }
+        .label2 {
+          font-size: 5vw;
+        }
+        .label1{
+          font-size: 8vw;
+          padding: 2px 0px;
+        }
+        .label3 {
+          font-size: 6vw;
+        }
+        .grid-container-2 {
+          grid-template-columns: 0.75fr 2.25fr;
+          padding-bottom: 30px;
+        }
+        a{
+          font-size: 3vw;
+        }
+      }
+      </style>
+  </head>
+  <body>
+    <span class="label label1">RPi Public Server</span>
+    <br></br>
+    <span class="label label3" id="ADCValue">Button Input: 0</span>
+    <br></br>
+    <div class="grid-container-2">
+      <span class="label label2">Device 1</span>
+      <div class="grid-container-3">
+        <button class="button button1" id="button1" onclick='sendData(0, 1)'>ON</button>
+        <button class="button button2" id="button2" onclick='sendData(0, 0)'>OFF</button>
+      </div>
+    </div>
+
+    <div class="grid-container-2">
+      <span class="label label2">Device 2</span>
+      <div class="grid-container-3">
+        <button class="button button1" id="button3" onclick='sendData(1, 1)'>ON</button>
+        <button class="button button2" id="button4" onclick='sendData(1, 0)'>OFF</button>
+      </div>
+    </div>
+
+    <div class="grid-container-2">
+      <span class="label label2">Device 3</span>
+      <div class="grid-container-3">
+        <button class="button button1" id="button5" onclick='sendData(2, 1)'>ON</button>
+        <button class="button button2" id="button6" onclick='sendData(2, 0)'>OFF</button>
+      </div>
+    </div>
+
+    <div class="grid-container-2">
+      <span class="label label2">Device 4</span>
+      <div class="grid-container-3">
+        <button class="button button1" id="button7" onclick='sendData(3, 1)'>ON</button>
+        <button class="button button2" id="button8" onclick='sendData(3, 0)'>OFF</button>
+      </div>
+    </div>
+
+    <br></br>
+    <a href="https://rupakpoddar.github.io/">Developer info</a>
+    <a id="uptime">Uptime: --/--</a>
+  </body>
+</html>
