@@ -1,25 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>RPi Public Server</title>
-    <link rel="icon" href="https://raw.githubusercontent.com/Rupakpoddar/rupakpoddar.github.io/main/Assets/ServerIcon.png" type="image/x-icon">
+    <title>Public Testing</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/Rupakpoddar/rupakpoddar.github.io/main/lab/icon.png" type="image/x-icon">
     <meta charset="UTF-8">
-    <meta name="theme-color" content="#03232E">
+    <meta name="theme-color" content="#91EB90">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Public Testing" />
+    <meta name="title" property="og:title" content="Public Testing" />
+    <meta property="og:type" content="Website" />
+    <meta name="image" property="og:image" content="https://raw.githubusercontent.com/Rupakpoddar/rupakpoddar.github.io/main/lab/image.png" />
+    <meta name="description" property="og:description" content="Public Testing" />
     <meta name="author" content="Rupak Poddar" />
     <script>
+      var url = "https://publicserver-poddarrup.pitunnel.com/";
       window.onload = function () {
         var xhttp = new XMLHttpRequest();
 
         xhttp.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("uptime").innerHTML = "Uptime: "+String(this.responseText);
-          } /* else {
-            document.getElementById("uptime").innerHTML = "Server Down";
-          } */
+          if (this.readyState == 4){
+            if (this.status == 200) {
+              document.getElementById("uptime").innerHTML = "Uptime: "+String(this.responseText);
+            } else {
+              document.getElementById("error").innerHTML = "Could not connect to the server. Please try reloading the page. If the problem persists, probably the developer turned down the server.";
+            }
+          }
         }
 
-        xhttp.open("GET", "getUptime", true);
+        xhttp.open("GET", url+"getUptime", true);
         xhttp.send();
       }
 
@@ -31,7 +39,7 @@
             document.getElementById("LEDState").innerHTML = this.responseText;
           }
         */
-        xhttp.open("GET", "setLED?LEDNUM="+lednum+"&LEDVAL="+ledval, true);
+        xhttp.open("GET", url+"setLED?LEDNUM="+lednum+"&LEDVAL="+ledval, true);
         xhttp.send();
       }
 
@@ -73,7 +81,7 @@
             document.getElementById("ADCValue").innerHTML = "Button Input: "+String(obj.adcValue);
           }
         };
-        xhttp.open("GET", "getStatus", true);
+        xhttp.open("GET", url+"getStatus", true);
         xhttp.send();
       }
     </script>
@@ -139,7 +147,7 @@
       }
 
       .label1:hover{
-        color: #3CB371;
+        color: red;
       }
 
       .label2{
@@ -185,6 +193,11 @@
 
       div {
         /* border:5px solid black; */
+        font-size: 1.5vw;
+      }
+
+      .redwarning {
+        color: red;
       }
 
       br {
@@ -208,7 +221,7 @@
       }
 
       a:hover{
-        color: #3CB371;
+        color: red;
       }
 
       html{
@@ -262,16 +275,21 @@
         a{
           font-size: 3vw;
         }
+        div{
+          font-size: 4vw;
+        }
       }
       </style>
   </head>
   <body>
-    <span class="label label1">RPi Public Server</span>
+    <div id="error" class="redwarning"></div>
+    <div>Note: Multiple users can toggle LEDs at the same time. Thank you for showing up.</div>
+    <span class="label label1">Public Testing</span>
     <br></br>
     <span class="label label3" id="ADCValue">Button Input: 0</span>
     <br></br>
     <div class="grid-container-2">
-      <span class="label label2">Device 1</span>
+      <span class="label label2">Device 1 (Yellow)</span>
       <div class="grid-container-3">
         <button class="button button1" id="button1" onclick='sendData(0, 1)'>ON</button>
         <button class="button button2" id="button2" onclick='sendData(0, 0)'>OFF</button>
@@ -279,7 +297,7 @@
     </div>
 
     <div class="grid-container-2">
-      <span class="label label2">Device 2</span>
+      <span class="label label2">Device 2 (Green)</span>
       <div class="grid-container-3">
         <button class="button button1" id="button3" onclick='sendData(1, 1)'>ON</button>
         <button class="button button2" id="button4" onclick='sendData(1, 0)'>OFF</button>
@@ -287,7 +305,7 @@
     </div>
 
     <div class="grid-container-2">
-      <span class="label label2">Device 3</span>
+      <span class="label label2">Device 3 (Red)</span>
       <div class="grid-container-3">
         <button class="button button1" id="button5" onclick='sendData(2, 1)'>ON</button>
         <button class="button button2" id="button6" onclick='sendData(2, 0)'>OFF</button>
@@ -295,7 +313,7 @@
     </div>
 
     <div class="grid-container-2">
-      <span class="label label2">Device 4</span>
+      <span class="label label2">Device 4 (Blue)</span>
       <div class="grid-container-3">
         <button class="button button1" id="button7" onclick='sendData(3, 1)'>ON</button>
         <button class="button button2" id="button8" onclick='sendData(3, 0)'>OFF</button>
@@ -305,5 +323,6 @@
     <br></br>
     <a href="https://rupakpoddar.github.io/">Developer info</a>
     <a id="uptime">Uptime: --/--</a>
+    <br></br>
   </body>
 </html>
