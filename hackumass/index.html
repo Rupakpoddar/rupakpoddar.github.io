@@ -89,7 +89,7 @@
 		  client.println("HTTP/1.1 200 OK");
 		  client.println("Content-Type: text/html");
 		  client.println(""); //  do not forget this one
-		  client.println("<!DOCTYPE HTML>");
+		  client.println("&lt!DOCTYPE HTML&gt");
 		  client.println("&lthtml&gt");
 
 		  client.print("Led pin is now: ");
@@ -100,8 +100,8 @@
 		    client.print("Off");
 		  }
 		  client.println("&ltbr&gt&ltbr&gt");
-		  client.println("Click &lta href=\"/LED=ON\">here&lt/a&gt turn the LED on pin 2 ON&ltbr&gt");
-		  client.println("Click &lta href=\"/LED=OFF\">here&lt/a&gt turn the LED on pin 2 OFF&ltbr&gt");
+		  client.println("Click &lta href=\"/LED=ON\"&gthere&lt/a&gt turn the LED on pin 2 ON&ltbr&gt");
+		  client.println("Click &lta href=\"/LED=OFF\"&gthere&lt/a&gt turn the LED on pin 2 OFF&ltbr&gt");
 		  client.println("&lt/html&gt");
 
 		  delay(1);
