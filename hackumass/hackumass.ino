@@ -47,6 +47,8 @@ void setup() {
   Serial.print("http://");
   Serial.print(WiFi.localIP());
   Serial.println("/");
+   
+  digitalWrite(ledPin, HIGH);
 }
  
 void loop() {
