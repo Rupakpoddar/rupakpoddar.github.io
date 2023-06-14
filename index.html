@@ -62,16 +62,6 @@
         src: url('CertificateRegular.ttf') format('truetype');
       }
 
-      @font-face {
-        font-family: 'CertificateCondensed';
-        src: url('CertificateCondensedItalic.ttf') format('truetype');
-      }
-
-      @font-face {
-        font-family: 'TravelBallad';
-        src: url('TravelBallad.ttf') format('truetype');
-      }
-
     .button {
       white-space: nowrap;
       overflow: hidden;
@@ -90,200 +80,295 @@
       border: none;
       color: white;
       transition: 0.5s ease;
-      }
+    }
 
-      .button:hover{
+    .button:hover{
+      border-radius: 2px;
+    }
+
+    .linkedin{background-color: #0072b1;}
+    /* .linkedin:hover {font-size: 25px} */
+    .linkedin:hover span {display: none;}
+    .linkedin:hover:before {content:"linkedin.com/in/poddarrupak"}
+
+    .github{background-color: #6e5494;}
+    .github:hover span {display: none;}
+    .github:hover:before {content:"github.com/rupakpoddar"}
+
+    .youtube{background-color: #e53935;}
+    .youtube:hover span {display: none;}
+    .youtube:hover:before {content:"youtube.com/rupakpoddar"}
+
+    .playstore{background-color: #01875f;}
+    .playstore:hover span {display: none;}
+    .playstore:hover:before {content:"Developer ID: 6227521500835566374"}
+
+    .arduino{background-color: #038c8c;}
+    /* .arduino:hover span {display: none;} */
+    /* .arduino:hover:before {content:"ESP8266 Firebase, ESP8266 Webhooks"} */
+
+    .subarduino{
+      background-color: #038c8c;
+      font-size: 2.4vh;
+    }
+
+    .instagram{background-color: #cd486b;}
+    .instagram:hover span {display: none;}
+    .instagram:hover:before {content:"Username: poddarrupak"}
+
+    .label {
+      display: block;
+      width: 100%;
+      color: black;
+      text-align: center;
+      margin: auto;
+      transition: 0.5s ease;
+    }
+
+    img {
+      margin: auto;
+      border: 4px solid black;
+      border-radius: 50%;
+      display: block;
+      /* margin-left: auto; */
+      /* margin-right: auto; */
+      width: 20vw;
+      height: 20vw;
+    }
+
+    /* img:hover {box-shadow: 0 0 50px 10px rgba(224, 114, 69, 0.5);} */
+
+    .container {
+      margin: auto;
+      display: block;
+      position: relative;
+      width: 60%;
+      min-width: 150px;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      transition: 0.4s ease;
+    }
+
+    .container:hover .overlay {
+      opacity: 0.95;
+    }
+
+    .grid-container-1 {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      grid-gap: 10px;
+    }
+
+    .grid-container-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 20px;
+    }
+
+    .grid-container-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 5px;
+    }
+
+    div.ex1 {
+      width: 100%;
+      margin: auto;
+      /* border:5px solid black; */
+    }
+
+    html{
+      padding-right: 17px;
+      vertical-align: baseline;
+      outline: 0;
+      margin: 0;
+      position: absolute;
+      left: 50%;
+      -ms-transform: translateX(-50%);
+      transform: translateX(-50%);
+      /* border: 5px solid green; */
+      background-color: white;
+      width: 75%;
+      font-family: sans-serif;
+      overflow-x: hidden;
+    }
+
+    body{
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    @media only screen and (max-width: 800px){
+      html{
+        width: 90%;
+      }
+      .grid-container-1 {
+        display: block;
+      }
+      img {
+        width: 45vw;
+        height: 45vw;
+        border: 3px solid black;
+      }
+      .grid-container-2 {
+        display: block;
+      }
+      .button{
+        margin-bottom: 7px;
         border-radius: 2px;
       }
-
-      .linkedin{background-color: #0072b1;}
-      /* .linkedin:hover {font-size: 25px} */
-      .linkedin:hover span {display: none;}
-      .linkedin:hover:before {content:"linkedin.com/in/poddarrupak"}
-
-      .github{background-color: #6e5494;}
-      .github:hover span {display: none;}
-      .github:hover:before {content:"github.com/rupakpoddar"}
-
-      .youtube{background-color: #e53935;}
-      .youtube:hover span {display: none;}
-      .youtube:hover:before {content:"youtube.com/rupakpoddar"}
-
-      .playstore{background-color: #01875f;}
-      .playstore:hover span {display: none;}
-      .playstore:hover:before {content:"Developer ID: 6227521500835566374"}
-
-      .arduino{background-color: #038c8c;}
-      /* .arduino:hover span {display: none;} */
-      /* .arduino:hover:before {content:"ESP8266 Firebase, ESP8266 Webhooks"} */
-
+      .hide-on-mobile {
+        display: none;
+      }
+      .linkedin{border: 4px outset #0072b1;}
+      .github{border: 4px outset #6e5494;}
+      .youtube{border: 4px outset #e53935;}
+      .playstore{border: 4px outset #01875f;}
+      .arduino{border: 4px outset #038c8c;}
+      .instagram{border: 4px outset #cd486b;}
+      .label1 {font-size: 12vw;}
+      .label2 {font-size: 6vw;}
+      .label3 {font-size: 4vw;}
+      .label4 {font-size: 3vw;}
+      .label1:hover{font-size: 12vw;}
       .subarduino{
-        background-color: #038c8c;
-        font-size: 2.4vh;
+        border: 4px outset #038c8c;
+        font-size: 2vh;
+      }
+    }
+
+    /* -------- Roller Animation -------- */
+    .main{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+    }
+
+    h1{
+      white-space: nowrap;
+      text-align:center;
+      font-size: 4rem;
+    }
+
+    .roller{
+      height: 3rem;
+      line-height: 3rem;
+      position: relative;
+      overflow: hidden; 
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #205295;
+    }
+
+    #UMass {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 2rem;
+    }
+
+    #of {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 1.2rem;
+    }
+
+    #BS {
+      font-family: "Certificate", "sans-serif";
+      font-size: 2.8rem;
+    }
+
+    #CE {
+      font-size: 2.5rem;
+    }
+
+    /* #tagline{
+      font-size: 1rem;
+      font-style: italic;
+      letter-spacing: 1rem;
+      margin-top: 0;
+      color: #DF362D;
+    } */
+
+    .roller #rolltext {
+      position: absolute;
+      top: -1.2rem;
+      animation: slide 7s infinite;  
+    }
+
+    @keyframes slide {
+      10%{
+        top: -1.2rem;
+      }
+      33%{
+        top: -4.6rem;    
+      }
+      66%{
+        top: -8.1rem;
+      }
+    }
+
+    @media screen and (max-width: 1200px){
+      h1{
+        font-size: 3rem;
       }
 
-      .instagram{background-color: #cd486b;}
-      .instagram:hover span {display: none;}
-      .instagram:hover:before {content:"Username: poddarrupak"}
-
-      .label {
-        display: block;
-        width: 100%;
-        color: black;
-        text-align: center;
-        margin: auto;
-        transition: 0.5s ease;
+      #UMass {
+        font-size: 1.5rem;
       }
 
-      .label1 {
-        font-family: "TravelBallad", "sans-serif";
-        font-size: 6vw;
-        padding: 12px 12px;
+      #of {
+        font-family: "Times New Roman", Times, serif;
+        font-size: 1rem;
       }
 
-      .label2 {
-        font-family: "CertificateCondensed", "Times", "serif";
-        font-size: 3vw;
-        padding: 0px 12px;
-      }
-
-      .label3 {
+      #BS {
         font-family: "Certificate", "sans-serif";
-        font-size: 2.5vw;
-        padding: 0px 12px;
+        font-size: 2rem;
       }
 
-      .label4 {
-        font-family: "Certificate", "sans-serif";
-        font-size: 1.5vw;
-        padding: 0px 12px;
+      #CE {
+        font-size: 1.8rem;
       }
 
-      .label1:hover{
-        font-size: 4.5vw;
-      }
+      /* #tagline{
+        font-size: 1rem;
+        font-style: italic;
+        letter-spacing: 1rem;
+        margin-top: 0;
+        color: #DF362D;
+      } */
 
-      img {
-        margin: auto;
-        border: 4px solid black;
-        border-radius: 50%;
-        display: block;
-        /* margin-left: auto; */
-        /* margin-right: auto; */
-        width: 20vw;
-        height: 20vw;
-      }
-
-      /* img:hover {box-shadow: 0 0 50px 10px rgba(224, 114, 69, 0.5);} */
-
-      .container {
-        margin: auto;
-        display: block;
-        position: relative;
-        width: 60%;
-        min-width: 150px;
-      }
-
-      .overlay {
+      .roller #rolltext {
         position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 100%;
-        width: 100%;
-        opacity: 0;
-        transition: 0.4s ease;
+        top: -1.2rem;
+        animation: slide-mob 7s infinite;  
       }
-
-      .container:hover .overlay {
-        opacity: 0.95;
-      }
-
-      .grid-container-1 {
-        display: grid;
-        grid-template-columns: 1fr 1.5fr;
-        grid-gap: 10px;
-      }
-
-      .grid-container-2 {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-gap: 20px;
-      }
-
-      .grid-container-3 {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-gap: 5px;
-      }
-
-      div.ex1 {
-        width: 100%;
-        margin: auto;
-        /* border:5px solid black; */
-      }
-
-      html{
-        padding-right: 17px;
-        vertical-align: baseline;
-        outline: 0;
-        margin: 0;
-        position: absolute;
-        left: 50%;
-        -ms-transform: translateX(-50%);
-        transform: translateX(-50%);
-        /* border: 5px solid green; */
-        background-color: white;
-        width: 75%;
-        font-family: sans-serif;
-        overflow-x: hidden;
-      }
-
-      body{
-        width: 100%;
-        height: 100%;
-        overflow-x: hidden;
-      }
-
-      @media only screen and (max-width: 800px){            /* 600px */
-        html{
-          width: 90%;
+        
+      @keyframes slide-mob {
+        10%{
+          top: -1.2rem;
         }
-        .grid-container-1 {
-          display: block;
+        33%{
+          top: -4.6rem;    
         }
-        img {
-          width: 40vw;
-          height: 40vw;
-          border: 3px solid black;
-        }
-        .grid-container-2 {
-          display: block;
-        }
-        .button{
-          margin-bottom: 7px;
-          border-radius: 2px;
-        }
-        .hide-on-mobile {
-          display: none;
-        }
-        .linkedin{border: 4px outset #0072b1;}
-        .github{border: 4px outset #6e5494;}
-        .youtube{border: 4px outset #e53935;}
-        .playstore{border: 4px outset #01875f;}
-        .arduino{border: 4px outset #038c8c;}
-        .instagram{border: 4px outset #cd486b;}
-        .label1 {font-size: 12vw;}
-        .label2 {font-size: 6vw;}
-        .label3 {font-size: 4vw;}
-        .label4 {font-size: 3vw;}
-        .label1:hover{font-size: 12vw;}
-        .subarduino{
-          border: 4px outset #038c8c;
-          font-size: 2vh;
+        66%{
+          top: -8rem;
         }
       }
+    }
+    /* ---------------------------------- */
+
     </style>
   </head>
 
@@ -296,11 +381,16 @@
           <img class="bottom" src="heartDribble.gif" alt="Rupak Poddar" />
         </div>
       </div>
-      <div class="ex1">
-        <span class="label label1">Rupak Poddar</span>
-        <span class="label label2">University of Massachusetts Amherst</span>
-        <span class="label label3">Bachelor of Science</span>
-        <span class="label label4">Summa Cum Laude</span>
+
+      <div class="main">
+        <h1>RUPAK PODDAR
+          <div class="roller">
+            <span id="rolltext">
+              <span id="UMass">University <span id="of">of</span> Massachusetts Amherst</span><br/>
+              <span id="BS">Bachelor of Science</span><br/>
+              <span id="CE">Computer Engineering</span><br/>
+          </div>
+        </h1>
       </div>
     </div>
 
