@@ -270,26 +270,29 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      color: #205295;
     }
 
     #UMass {
       font-family: "Times New Roman", Times, serif;
       font-size: 2rem;
+      color: #6E5773;
     }
 
     #of {
       font-family: "Times New Roman", Times, serif;
       font-size: 1.2rem;
+      color: #6E5773;
     }
 
     #BS {
       font-family: "Certificate", "sans-serif";
       font-size: 2.8rem;
+      color: #D45079;
     }
 
     #CE {
       font-size: 2.5rem;
+      color: #EA9085;
     }
 
     /* #tagline{
@@ -314,11 +317,16 @@
         top: -4.6rem;    
       }
       66%{
-        top: -8.1rem;
+        top: -8.2rem;
       }
     }
 
-    @media screen and (max-width: 1200px){
+    @media only screen and (min-width: 1000px) and (max-width: 1200px){
+      .roller{
+        height: 2.4rem;
+        line-height: 2.4rem;
+      }
+
       h1{
         font-size: 3rem;
       }
@@ -341,32 +349,72 @@
         font-size: 1.8rem;
       }
 
-      /* #tagline{
-        font-size: 1rem;
-        font-style: italic;
-        letter-spacing: 1rem;
-        margin-top: 0;
-        color: #DF362D;
-      } */
-
       .roller #rolltext {
         position: absolute;
-        top: -1.2rem;
+        top: -1rem;
         animation: slide-mob 7s infinite;  
       }
         
       @keyframes slide-mob {
         10%{
-          top: -1.2rem;
+          top: -1rem;
         }
         33%{
-          top: -4.6rem;    
+          top: -3.8rem;    
         }
         66%{
-          top: -8rem;
+          top: -6.6rem;
         }
       }
     }
+
+    @media only screen and (max-width: 1000px){
+      .roller{
+        height: 1.7rem;
+        line-height: 1.7rem;
+      }
+
+      h1{
+        font-size: 2.2rem;
+      }
+
+      #UMass {
+        font-size: 1rem;
+      }
+
+      #of {
+        font-family: "Times New Roman", Times, serif;
+        font-size: 0.7rem;
+      }
+
+      #BS {
+        font-family: "Certificate", "sans-serif";
+        font-size: 1.4rem;
+      }
+
+      #CE {
+        font-size: 1.1rem;
+      }
+
+      .roller #rolltext {
+        position: absolute;
+        top: -0.7rem;
+        animation: slide-mob 7s infinite;  
+      }
+        
+      @keyframes slide-mob {
+        10%{
+          top: -0.7rem;
+        }
+        33%{
+          top: -2.7rem;    
+        }
+        66%{
+          top: -4.8rem;
+        }
+      }
+    }
+
     /* ---------------------------------- */
 
     </style>
@@ -394,7 +442,8 @@
       </div>
     </div>
 
-    <br></br>
+    <br class="hide-on-mobile">
+    <br class="hide-on-mobile">
     <div class="grid-container-2">
       <button class="button linkedin" onclick="window.open('https://www.linkedin.com/in/poddarrupak/','_blank')"><span>LinkedIn</span></button>
       <button class="button github" onclick="window.open('https://github.com/rupakpoddar','_blank')"><span>GitHub</span></button>
