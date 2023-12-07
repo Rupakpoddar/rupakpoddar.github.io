@@ -11,3 +11,5 @@ https://rupakpoddar.github.io/lab/
 https://rupakpoddar.github.io/WiblePrivacyPolicy/
 
 https://rupakpoddar.github.io/WibleSupport/
+
+https://rupakpoddar.github.io/hackumass/
