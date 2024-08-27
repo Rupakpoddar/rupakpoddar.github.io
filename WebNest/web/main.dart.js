@@ -84184,7 +84184,7 @@ h=J.c(m,"1")?0:1
 o.d.$3(n,"State",h)
 s=9
 break
-case 10:l=A.cW(h+"?deviceName="+A.j(n)+"&paramType=State&paramValue=2",0,null)
+case 10:l=A.cW(h+"?deviceName="+A.j(n)+"&paramType=State&paramValue=-1",0,null)
 s=12
 return A.P(A.pO(l),$async$$0)
 case 12:k=b
