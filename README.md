@@ -11,3 +11,5 @@ https://rupakpoddar.github.io/WiblePrivacyPolicy/
 https://rupakpoddar.github.io/WibleSupport/
 
 https://rupakpoddar.github.io/hackumass/
+
+https://rupakpoddar.github.io/esp32c6/
