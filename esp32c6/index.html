@@ -2,35 +2,293 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Coming Soon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>ESP32-C6</title>
+    <base href="file:///Users/rupakpoddar/Desktop/ESP32C6-WEB/assets/" />
+    <!-- Google Fonts link for Open Sans -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap">
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f0f0f0;
-            color: #333;
+        /* Basic reset */
+        * {
             margin: 0;
-            height: 100vh;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Base font styling */
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Open Sans', Arial, sans-serif; /* Set Open Sans as default */
+        }
+
+        /* Portrait orientation message */
+        #orientation-message {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 1);
+            color: white;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
+            text-align: center;
+            z-index: 10;
+            padding: 20px;
         }
-        h1 {
-            font-size: 2.5em;
-            margin: 0;
+
+        #orientation-message img {
+            margin-top: 10px;
+            width: 50px; /* Adjust size as needed */
+            height: auto;
         }
-        p {
-            font-size: 1.2em;
-            color: #777;
+
+        /* Flex container for landscape view */
+        #container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Left and right sections */
+        #left-section, #right-section {
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        #left-section {
+            width: 30%;
+            background-color: #F5F5F5;
+            box-shadow: inset -1px 0 0 #ddd;
+        }
+
+        #right-section {
+            font-family: 'Open Sans', Arial, sans-serif;
+            font-weight: 300; /* Light weight for Open Sans */
+            width: 70%;
+            background-color: #FFFFFF;
+            box-shadow: inset 1px 0 0 #ddd;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            text-align: center;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        /* Style for "Buy Now" button */
+        .buy-now-button {
+            display: block;
+            text-align: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #3A3A3A; /* Dark gray */
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: background 0.3s;
+        }
+
+        .buy-now-button:hover {
+            background-color: #2A2A2A; /* Darker gray on hover */
+        }
+
+        /* Material design for left section list */
+        .feature-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: background 0.3s;
+        }
+
+        .feature-item:hover {
+            background-color: #E0E0E0;
+        }
+
+        .feature-item.active {
+            background-color: #0090D8; /* Dark blue */
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Style for right section content */
+        .feature-content {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: justify; /* Align text as justified */
+        }
+
+        .feature-content img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            align-self: center; /* Center align image */
+        }
+
+        /* Active content */
+        .feature-content.active {
+            display: flex;
         }
     </style>
 </head>
 <body>
-    <div>
-        <h1>More information will be added soon!</h1>
-        <p>Stay tuned for updates.</p>
+
+    <!-- Portrait orientation message -->
+    <div id="orientation-message">
+        <p>Please rotate your device to landscape mode</p>
+        <img src="file:///Users/rupakpoddar/Desktop/ESP32C6-WEB/assets/rotate-smartphone.png" alt="Rotate Icon">
     </div>
+
+    <!-- Main container -->
+    <div id="container">
+        <!-- Left Section: Features List -->
+        <div id="left-section">
+            <a href="https://ebay.com/your-link" target="_blank" class="buy-now-button">Buy Now</a>
+            <div id="feature-overview" class="feature-item active" onclick="showFeature('overview')">Overview</div>
+            <div id="feature-arduino" class="feature-item" onclick="showFeature('arduino')">Arduino IDE</div>
+            <div id="feature-ble" class="feature-item" onclick="showFeature('ble')">USB C</div>
+            <div id="feature-ble" class="feature-item" onclick="showFeature('ble')">Power Input</div>
+            <div id="feature-ble" class="feature-item" onclick="showFeature('ble')">5V 4A BEC</div>
+            <div id="feature-ble" class="feature-item" onclick="showFeature('ble')">Motor Driver</div>
+            <div id="feature-ble" class="feature-item" onclick="showFeature('ble')">GPIO</div>
+            <div id="feature-ble" class="feature-item" onclick="showFeature('ble')">Qwiic Connect</div>
+            <div id="feature-ble" class="feature-item" onclick="showFeature('ble')">WS2812B LEDs</div>
+            <div id="feature-wifi" class="feature-item" onclick="showFeature('wifi')">WiFi 6 Support</div>
+            <div id="feature-ble" class="feature-item" onclick="showFeature('ble')">BLE 5.0</div>
+            <!-- Add more features as needed -->
+        </div>
+
+        <!-- Right Section: Feature Content -->
+        <div id="right-section">
+            <div id="content-overview" class="feature-content active">
+                <!-- Side-by-side container for top and bottom images with labels -->
+                <div style="display: flex; justify-content: center; gap: 10px; width: 100%;">
+                    <!-- ESP32-C6 Top image and label -->
+                    <div style="text-align: center; flex: 1;">
+                        <img src="esp32c6-top.png" alt="ESP32-C6 Top" style="width: 100%; height: auto; max-height: 325px; object-fit: contain;">
+                        <p style="margin-top: 5px; font-weight: bold;">Board Top</p>
+                    </div>
+                    
+                    <!-- ESP32-C6 Bottom image and label -->
+                    <div style="text-align: center; flex: 1;">
+                        <img src="esp32c6-bottom.png" alt="ESP32-C6 Bottom" style="width: 100%; height: auto; max-height: 325px; object-fit: contain;">
+                        <p style="margin-top: 5px; font-weight: bold;">Board Bottom</p>
+                    </div>
+                </div>
+            
+                 <!-- Key features image -->
+                <div style="text-align: center; margin-top: 20px;">
+                    <img src="keyFeatures.png" alt="Highlights" style="width: 80%; max-height: 750px; object-fit: contain;">
+                </div>
+
+                <!-- Introductory paragraph -->
+                <p>Introducing our custom ESP32-C6 development board, designed to streamline your prototyping with built-in components that reduce wiring complexity and maximize functionality. With WiFi 6, BLE, and USB-C programming, this board includes a high-power voltage regulator, dual motor drivers/high power output pins, integrated addressable LEDs, and a Qwiic/Stemma QT port for quick sensor and module connections. Ideal for robotics, IoT, and smart device projects, this board empowers you to jumpstart development with powerful, versatile hardware and minimal wiring overhead.</p>
+            </div>
+            
+            <div id="content-arduino" class="feature-content">
+                <div class="step-container">
+                    
+                    <!-- Step 1 -->
+                    <div class="step">
+                        <h3 style="font-weight: normal;">Step 1</h3>
+                        <div style="display: flex; align-items: center; gap: 20px;">
+                            <img src="arduino-ide/arduino-ide0001.png" alt="Step 1 Image" style="width: 60%; height: auto;">
+                            <p>This is a <strong>one-time setup</strong>. Open <strong>Arduino IDE</strong> and go to <em>Settings/Preferences</em>.</p>
+                        </div>
+                    </div>
+            
+                    <!-- Step 2 -->
+                    <div class="step">
+                        <h3 style="font-weight: normal;">Step 2</h3>
+                        <div style="display: flex; align-items: center; gap: 20px;">
+                            <img src="arduino-ide/arduino-ide0002.png" alt="Step 2 Image" style="width: 60%; height: auto;">
+                            <div>
+                                <p>In the <em>Additional Board Manager URLs</em> section, paste the following link:</p>
+                                <p><a href="https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json" target="_blank">
+                                    https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+                                </a></p>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <!-- Step 3 -->
+                    <div class="step">
+                        <h3 style="font-weight: normal;">Step 3</h3>
+                        <div style="display: flex; align-items: center; gap: 20px;">
+                            <img src="arduino-ide/arduino-ide0003.png" alt="Step 3 Image" style="width: 60%; height: auto;">
+                            <p>Go to <strong>Tools &gt; Board &gt; Board Manager</strong>.</p>
+                        </div>
+                    </div>
+            
+                    <!-- Step 4 -->
+                    <div class="step">
+                        <h3 style="font-weight: normal;">Step 4</h3>
+                        <div style="display: flex; align-items: center; gap: 20px;">
+                            <img src="arduino-ide/arduino-ide0004.png" alt="Step 4 Image" style="width: 60%; height: auto;">
+                            <p>In the <em>search box</em>, type <strong>esp32</strong> and install the <strong>board definition by Espressif Systems</strong>.</p>
+                        </div>
+                    </div>
+            
+                    <!-- Step 5 -->
+                    <div class="step">
+                        <h3 style="font-weight: normal;">Step 5</h3>
+                        <div style="display: flex; align-items: center; gap: 20px;">
+                            <img src="arduino-ide/arduino-ide0005.png" alt="Step 5 Image" style="width: 60%; height: auto;">
+                            <p>Connect the board to your PC using a USB-C cable. Go to <strong>Tools &gt; Board &gt; esp32 &gt; ESP32C6 Dev Module</strong>, select the correct <em>port</em>, and you're ready to <strong>upload your code!</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>                                   
+
+            <div id="content-wifi" class="feature-content">
+                <img src="path/to/wifi-image.jpg" alt="WiFi 6">
+                <p>Enjoy enhanced connectivity with WiFi 6, enabling faster speeds and greater range.</p>
+            </div>
+            
+            <div id="content-ble" class="feature-content">
+                <img src="path/to/ble-image.jpg" alt="BLE 5.0">
+                <p>Experience seamless Bluetooth communication with BLE 5.0, perfect for IoT applications.</p>
+            </div>
+            <!-- Add more content sections as needed -->
+        </div>
+    </div>
+
+    <script>
+        // Orientation check for displaying rotation message
+        function checkOrientation() {
+            if (window.innerWidth < window.innerHeight) {
+                document.getElementById('orientation-message').style.display = 'flex';
+            } else {
+                document.getElementById('orientation-message').style.display = 'none';
+            }
+        }
+
+        window.addEventListener('resize', checkOrientation);
+        window.addEventListener('load', checkOrientation);
+
+        // Feature display function
+        function showFeature(featureId) {
+            // Remove active class from all feature items
+            document.querySelectorAll('.feature-item').forEach(item => item.classList.remove('active'));
+            // Add active class to selected feature item
+            document.getElementById('feature-' + featureId).classList.add('active');
+
+            // Hide all content sections
+            document.querySelectorAll('.feature-content').forEach(content => content.classList.remove('active'));
+            // Show selected content section
+            document.getElementById('content-' + featureId).classList.add('active');
+        }
+    </script>
+
 </body>
 </html>
