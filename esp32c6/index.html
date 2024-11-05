@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>ESP32-C6</title>
-    <base href="/esp32c6/assets/" />
+    <base href="file:///Users/rupakpoddar/Desktop/ESP32C6-WEB/assets/" />
     <!-- Google Fonts link for Open Sans -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap">
 
@@ -34,7 +34,6 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 1);
             color: white;
-            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -235,6 +234,44 @@
             <div id="content-motor-driver" class="feature-content">
                 <img src="motor_driver.png" alt="Motor Driver" class="scale-50">
                 <p>Integrated motor drivers simplify robotics projects, allowing for dual motor control with high-power output pins directly from the board.</p>
+                <h2>Motor Driver Setup Code</h2>
+                <pre class="prettyprint lang-cpp"><code>
+                    // Define motor control pins
+                    #define MOTOR_1A 18 // Motor 1, Input A
+                    #define MOTOR_1B 19 // Motor 1, Input B
+                    #define MOTOR_2A 20 // Motor 2, Input A
+                    #define MOTOR_2B 21 // Motor 2, Input B
+                    
+                    void setup() {
+                        // Set motor pins as outputs
+                        pinMode(MOTOR_1A, OUTPUT);
+                        pinMode(MOTOR_1B, OUTPUT);
+                        pinMode(MOTOR_2A, OUTPUT);
+                        pinMode(MOTOR_2B, OUTPUT);
+                    }
+                    
+                    void loop() {
+                        // Control Motor 1: Move forward with PWM speed 200 (range 0–255)
+                        analogWrite(MOTOR_1A, 200);  // Motor 1 forward
+                        analogWrite(MOTOR_1B, 0);    // Motor 1 backward off
+                        delay(2000);                  // Run Motor 1 for 2 seconds
+                    
+                        // Stop Motor 1
+                        analogWrite(MOTOR_1A, 0);
+                        analogWrite(MOTOR_1B, 0);
+                        delay(1000);                  // Pause for 1 second
+                    
+                        // Control Motor 2: Move backward with PWM speed 150 (range 0–255)
+                        analogWrite(MOTOR_2A, 0);     // Motor 2 forward off
+                        analogWrite(MOTOR_2B, 150);   // Motor 2 backward
+                        delay(2000);                  // Run Motor 2 for 2 seconds
+                    
+                        // Stop Motor 2
+                        analogWrite(MOTOR_2A, 0);
+                        analogWrite(MOTOR_2B, 0);
+                        delay(1000);                  // Pause for 1 second
+                    }
+                </code></pre>
             </div>
 
             <div id="content-gpio" class="feature-content">
@@ -245,11 +282,62 @@
             <div id="content-qwiic" class="feature-content">
                 <img src="qwiic.png" alt="Qwiic Connect" class="scale-50">
                 <p>The onboard Qwiic connector supports I2C modules from SparkFun and Adafruit, making it easy to expand with additional sensors and peripherals.</p>
+                
+                <h2>Qwiic Setup Code</h2>
+                <pre class="prettyprint lang-cpp"><code>
+                    #include &lt;Wire.h&gt;
+                    #include "libraryName.h"
+
+                    void setup() {
+                        Wire.begin(12, 13);
+                        libraryName.begin(Wire);
+                    }
+                </code></pre>
             </div>
 
             <div id="content-ws2812b" class="feature-content">
                 <img src="ws2812b.gif" alt="WS2812B LEDs" class="scale-50">
                 <p>Built-in WS2812B addressable LEDs offer customizable lighting options, perfect for adding visual feedback or aesthetic appeal to your projects.</p>
+            
+                <!-- FastLED and NeoPixel setup -->
+                <h3>Setting up WS2812B LEDs</h3>
+                <p>Here are the setups for initializing WS2812B LEDs using the FastLED and NeoPixel libraries.</p>
+                
+                <h2>WS2812B NeoPixel Setup Code</h2>
+                <pre class="prettyprint lang-cpp"><code>
+                    #include &lt;Adafruit_NeoPixel.h&gt;
+
+                    #define NUM_LEDS 4
+                    #define DATA_PIN 4
+
+                    Adafruit_NeoPixel leds(NUM_LEDS, DATA_PIN, NEO_GRB + NEO_KHZ800);
+
+                    void setup() {
+                        leds.begin();
+                        .
+                        .
+                        .
+                        leds.show();
+                    }
+                </code></pre>
+
+                <h2>FastLED Setup Code</h2>
+                <pre class="prettyprint lang-cpp"><code>
+                    #include &lt;FastLED.h&gt;
+
+                    #define NUM_LEDS 4
+                    #define DATA_PIN 4
+
+                    CRGB leds[NUM_LEDS];
+
+                    void setup() {
+                        FastLED.addLeds&lt;NEOPIXEL, DATA_PIN&gt;(leds, NUM_LEDS);
+                        .
+                        .
+                        .
+                        FastLED.show();
+                    }
+                </code></pre>
             </div>
 
             <div id="content-wifi" class="feature-content">
@@ -267,6 +355,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script>
         // Orientation warning display
         function checkOrientation() {
