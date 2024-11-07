@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>ESP32-C6</title>
-    <base href="/esp32c6/assets/" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap">
+    <base href="file:///Users/rupakpoddar/Desktop/ESP32C6-WEB/assets/" />
+    <!-- <base href="/esp32c6/assets/" /> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" rel="stylesheet" />
 
     <style>
         /* Basic reset */
@@ -20,7 +21,8 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            font-family: 'Open Sans', Arial, sans-serif;
+            font-family: Arial, sans-serif;
+            line-height: 1.4;
         }
 
         /* Orientation message */
@@ -57,14 +59,14 @@
         /* Left section styling */
         #left-section {
             overflow-y: auto;
-            padding: 20px;
-            width: 30%;
+            padding: 10px;
+            width: 10%;
             background-color: #F5F5F5;
         }
 
         /* Right section styling */
         #right-section {
-            width: 70%;
+            width: 90%;
             padding: 40px;
             background-color: #FFFFFF;
             overflow-y: auto;
@@ -76,7 +78,8 @@
         }
 
         h1 {
-            font-size: 2.2rem;
+            font-size: 2em;
+            color: #0090D8;
             margin-bottom: 20px;
             white-space: nowrap;
             overflow: hidden;
@@ -86,11 +89,12 @@
         img {
             display: block;
             margin: 0 auto;
+            margin-bottom: 20px;
         }
 
         /* Image scaling classes */
         .scale-50 { width: 50%; }
-        .scale-80 { width: 80%; border-radius: 10px; margin-top: 10px; margin-bottom: 20px;}
+        .scale-80 { width: 80%; border-radius: 10px; margin-top: 10px;}
 
         /* Common styles for headers */
         .content-header {
@@ -102,40 +106,61 @@
             text-overflow: ellipsis;
         }
 
-        /* Buy Now button */
         .buy-now-button {
             display: block;
             text-align: center;
-            padding: 15px;
             margin-bottom: 10px;
-            background-color: #3A3A3A;
+            background-color: #70A288;
             color: white;
             font-weight: bold;
             text-decoration: none;
-            border-radius: 50px;
+            border-radius: 35%;
             transition: background 0.3s;
+            width: 100%;
+            padding-bottom: 100%;
+            position: relative;
+        }
+
+        .buy-now-button img {
+            width: 70%;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
         .buy-now-button:hover {
-            background-color: #2A2A2A;
+            background-color: #D5896F;
         }
 
         /* Feature item styling */
         .feature-item {
-            padding: 15px;
             margin-bottom: 10px;
             cursor: pointer;
-            border-radius: 50px;
+            border-radius: 35%;
             transition: background 0.3s;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
             display: block;
             width: 100%;
+            padding-bottom: 100%;
+            position: relative;
+            background-color: #A0A0A0;
         }
 
-        .feature-item:hover { background-color: #E0E0E0; }
-        .feature-item.active { background-color: #0090D8; color: white; font-weight: bold; }
+        .feature-item img {
+            width: 70%;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .feature-item:hover { background-color: #707070; }
+        .feature-item.active { background-color: #04395E; }
 
         /* Feature content */
         .feature-content {
@@ -143,7 +168,7 @@
             flex-direction: column;
             align-items: left;
             text-align: justify;
-            font-family: Arial, sans-serif;
+            font-family: Arial;
             padding: 20px;
         }
 
@@ -162,18 +187,29 @@
     <div id="container">
         <!-- Left Section: Features List -->
         <div id="left-section">
-            <a href="https://ebay.com/your-link" target="_blank" class="buy-now-button">Buy Now</a>
-            <div id="feature-overview" class="feature-item active" onclick="showFeature('overview')">General Overview</div>
-            <div id="feature-arduino" class="feature-item" onclick="showFeature('arduino')">Arduino Integration Guide</div>
-            <div id="feature-usbc" class="feature-item" onclick="showFeature('usbc')">USB-C Interface</div>
-            <div id="feature-power-input" class="feature-item" onclick="showFeature('power-input')">Power Input Options</div>
-            <div id="feature-bec" class="feature-item" onclick="showFeature('bec')">Voltage Regulator</div>
-            <div id="feature-motor-driver" class="feature-item" onclick="showFeature('motor-driver')">High-Power Motor Driver</div>
-            <div id="feature-gpio" class="feature-item" onclick="showFeature('gpio')">General Purpose I/O Pins</div>
-            <div id="feature-qwiic" class="feature-item" onclick="showFeature('qwiic')">Qwiic/Stemma Support</div>
-            <div id="feature-ws2812b" class="feature-item" onclick="showFeature('ws2812b')">Addressable LEDs</div>
-            <div id="feature-wifi" class="feature-item" onclick="showFeature('wifi')">WiFi 6 Connectivity</div>
-            <div id="feature-ble" class="feature-item" onclick="showFeature('ble')">Bluetooth Low Energy 5.0</div>
+            <a href="https://ebay.com/your-link" target="_blank" class="buy-now-button">
+                <img src="navigation_panel/purchase.png" alt="Buy Now" class="navigation-panel">
+            </a>
+            
+            <div id="feature-overview" class="feature-item active" onclick="showFeature('overview')">
+                <img src="navigation_panel/overview.png" alt="General Overview" class="navigation-panel">
+            </div>
+            
+            <div id="feature-arduino" class="feature-item" onclick="showFeature('arduino')">
+                <img src="navigation_panel/arduino.png" alt="Arduino Integration Guide" class="navigation-panel">
+            </div>
+            
+            <div id="feature-motor-driver" class="feature-item" onclick="showFeature('motor-driver')">
+                <img src="navigation_panel/drv8871.png" alt="High-Power Motor Driver" class="navigation-panel">
+            </div>
+            
+            <div id="feature-qwiic" class="feature-item" onclick="showFeature('qwiic')">
+                <img src="navigation_panel/qwiic.png" alt="Qwiic/Stemma Support" class="navigation-panel">
+            </div>
+            
+            <div id="feature-ws2812b" class="feature-item" onclick="showFeature('ws2812b')">
+                <img src="navigation_panel/ws2812b.png" alt="Addressable LEDs" class="navigation-panel">
+            </div>
         </div>
 
         <!-- Right Section: Feature Content -->
@@ -181,7 +217,16 @@
             <div id="content-overview" class="feature-content active">
                 <h1>General Overview</h1>
                 <img src="overview.png" alt="ESP32-C6 Overview" class="scale-50">
-                <p>Introducing our custom ESP32-C6 development board, designed to streamline your prototyping with built-in components that reduce wiring complexity and maximize functionality. With WiFi 6, BLE, and USB-C programming, this board includes a high-power voltage regulator, high-power dual motor driver, integrated addressable LEDs, and a Qwiic/Stemma QT port for quick sensor and module connections. Ideal for robotics, IoT, and smart device projects, this board empowers you to jumpstart development with powerful, versatile hardware and minimal wiring overhead.</p>
+                
+                <h2 style="font-size: 1.2em; margin-top: 10px; font-weight: 700;">One Board Does It All</h2>
+            
+                <p>
+                    Discover the potential of our ESP32-C6 based development board, engineered to simplify your prototyping needs with integrated components that streamline connections and enhance functionality. Equipped with advanced features like WiFi 6, BLE 5.0, USB-C programming, and a robust power management system, this board is ready to support high-performance applications in robotics, IoT, and smart devices. Built-in components, including high-power motor drivers, addressable LEDs, and a Qwiic/Stemma QT port, minimize wiring needs and maximize reliability, allowing you to accelerate development with powerful, all-in-one hardware.
+                </p>
+            
+                <p style="font-size: 0.85em; color: #666; text-align: center; margin-top: 20px;">
+                    Designed by Rupak Poddar. For more information, visit the developer's portfolio at <a href="https://rupakpoddar.github.io/" style="color: #0056b3; text-decoration: none;">rupakpoddar.github.io</a>.
+                </p>
             </div>
 
             <div id="content-arduino" class="feature-content">
@@ -195,7 +240,7 @@
                     <div class="step">
                         <h3>Step 2</h3>
                         <p>In <em>Additional Board Manager URLs</em>, paste:</p>
-                        <p class="code-url">https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json</p>
+                        <p class="code-url" style="color: #0056b3;">https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json</p>
                         <img src="arduino_ide/arduino_ide0002.png" alt="Step 2" class="scale-80">
                     </div>
                     <div class="step">
@@ -216,64 +261,40 @@
                 </div>
             </div>
 
-            <div id="content-usbc" class="feature-content">
-                <h1>USB-C Interface</h1>
-                <img src="usb_c.png" alt="USB-C Port" class="scale-50">
-                <p>Our board uses a USB-C connector for both data transfer and power, offering a modern, reversible port that ensures quick and easy programming access with any USB-C cable.</p>
-            </div>
-
-            <div id="content-power-input" class="feature-content">
-                <h1>Power Input Options</h1>
-                <img src="power_input.png" alt="Power Input" class="scale-50">
-                <p>Designed to support a range of power inputs, this board can run on 5V through the USB-C port or any external 5-16V power supply for flexible applications.</p>
-            </div>
-
-            <div id="content-bec" class="feature-content">
-                <h1>Voltage Regulator</h1>
-                <img src="bec.png" alt="5V 3A BEC" class="scale-50">
-                <p>The built-in 5V, 3A BEC provides stable power, ideal for motors and other high-power components, ensuring seamless performance in demanding projects.</p>
-            </div>
-
             <div id="content-motor-driver" class="feature-content">
                 <h1>High Power Motor Driver</h1>
                 <img src="motor_driver.png" alt="Motor Driver" class="scale-50">
                 <p>Integrated motor drivers simplify robotics projects, allowing for dual motor control with high-power output pins directly from the board.</p>
                 <h2>Motor Driver Setup Code</h2>
-                <pre><code>
-        // Define motor control pins
-        #define MOTOR_1A 18 // Motor 1, Input A
-        #define MOTOR_1B 19 // Motor 1, Input B
-        #define MOTOR_2A 20 // Motor 2, Input A
-        #define MOTOR_2B 21 // Motor 2, Input B
+                <pre><code class="language-c">
+    // Define motor control pins
+    #define MOTOR_1A 18 // Motor 1, Input A
+    #define MOTOR_1B 19 // Motor 1, Input B
+    #define MOTOR_2A 20 // Motor 2, Input A
+    #define MOTOR_2B 21 // Motor 2, Input B
 
-        void setup() {
-            pinMode(MOTOR_1A, OUTPUT);
-            pinMode(MOTOR_1B, OUTPUT);
-            pinMode(MOTOR_2A, OUTPUT);
-            pinMode(MOTOR_2B, OUTPUT);
-        }
+    void setup() {
+        pinMode(MOTOR_1A, OUTPUT);
+        pinMode(MOTOR_1B, OUTPUT);
+        pinMode(MOTOR_2A, OUTPUT);
+        pinMode(MOTOR_2B, OUTPUT);
+    }
 
-        void loop() {
-            analogWrite(MOTOR_1A, 200); 
-            analogWrite(MOTOR_1B, 0); 
-            delay(2000);
-            analogWrite(MOTOR_1A, 0);
-            analogWrite(MOTOR_1B, 0);
-            delay(1000);
-            analogWrite(MOTOR_2A, 0);
-            analogWrite(MOTOR_2B, 150);
-            delay(2000);
-            analogWrite(MOTOR_2A, 0);
-            analogWrite(MOTOR_2B, 0);
-            delay(1000);
-        }
+    void loop() {
+        analogWrite(MOTOR_1A, 200); 
+        analogWrite(MOTOR_1B, 0); 
+        delay(2000);
+        analogWrite(MOTOR_1A, 0);
+        analogWrite(MOTOR_1B, 0);
+        delay(1000);
+        analogWrite(MOTOR_2A, 0);
+        analogWrite(MOTOR_2B, 150);
+        delay(2000);
+        analogWrite(MOTOR_2A, 0);
+        analogWrite(MOTOR_2B, 0);
+        delay(1000);
+    }
                 </code></pre>
-            </div>
-
-            <div id="content-gpio" class="feature-content">
-                <h1>General Purpose I/O Pins</h1>
-                <img src="gpio.png" alt="GPIO" class="scale-50">
-                <p>Offering a versatile array of GPIO pins, this board supports digital I/O, analog input, PWM, and more, for wide compatibility with various components and sensors.</p>
             </div>
 
             <div id="content-qwiic" class="feature-content">
@@ -281,14 +302,14 @@
                 <img src="qwiic.png" alt="Qwiic Connect" class="scale-50">
                 <p>The onboard Qwiic connector supports I2C modules from SparkFun and Adafruit, making it easy to expand with additional sensors and peripherals.</p>
                 <h2>Qwiic Setup Code</h2>
-                <pre><code>
-        #include &lt;Wire.h&gt;
-        #include "libraryName.h"
+                <pre><code class="language-c">
+    #include &lt;Wire.h&gt;
+    #include "libraryName.h"
 
-        void setup() {
-            Wire.begin(12, 13);
-            libraryName.begin(Wire);
-        }
+    void setup() {
+        Wire.begin(12, 13);
+        libraryName.begin(Wire);
+    }
                 </code></pre>
             </div>
 
@@ -297,51 +318,48 @@
                 <img src="ws2812b.gif" alt="WS2812B LEDs" class="scale-50">
                 <p>Built-in WS2812B addressable LEDs offer customizable lighting options, perfect for adding visual feedback or aesthetic appeal to your projects.</p>
                 <h2>WS2812B NeoPixel Setup Code</h2>
-                <pre><code>
-        #include &lt;Adafruit_NeoPixel.h&gt;
+                <pre><code class="language-c">
+    #include &lt;Adafruit_NeoPixel.h&gt;
 
-        #define NUM_LEDS 4
-        #define DATA_PIN 4
+    #define NUM_LEDS 4
+    #define DATA_PIN 4
 
-        Adafruit_NeoPixel leds(NUM_LEDS, DATA_PIN, NEO_GRB + NEO_KHZ800);
+    Adafruit_NeoPixel leds(NUM_LEDS, DATA_PIN, NEO_GRB + NEO_KHZ800);
 
-        void setup() {
-            leds.begin();
-            leds.show();
-        }
+    void setup() {
+        leds.begin();
+        //
+        // ...
+        //
+        leds.show();
+    }
                 </code></pre>
                 <h2>FastLED Setup Code</h2>
-                <pre><code>
-        #include &lt;FastLED.h&gt;
+                <pre><code class="language-c">
+    #include &lt;FastLED.h&gt;
 
-        #define NUM_LEDS 4
-        #define DATA_PIN 4
+    #define NUM_LEDS 4
+    #define DATA_PIN 4
 
-        CRGB leds[NUM_LEDS];
+    CRGB leds[NUM_LEDS];
 
-        void setup() {
-            FastLED.addLeds&lt;NEOPIXEL, DATA_PIN&gt;(leds, NUM_LEDS);
-            FastLED.show();
-        }
+    void setup() {
+        FastLED.addLeds&lt;NEOPIXEL, DATA_PIN&gt;(leds, NUM_LEDS);
+        //
+        // ...
+        //
+        FastLED.show();
+    }
                 </code></pre>
-            </div>
-
-            <div id="content-wifi" class="feature-content">
-                <h1>WiFi 6 Connectivity</h1>
-                <img src="esp32c6.png" alt="WiFi 6" class="scale-50">
-                <p>With WiFi 6 capability, this board ensures high-speed, reliable wireless connectivity, even in dense network environments.</p>
-            </div>
-
-            <div id="content-ble" class="feature-content">
-                <h1>Bluetooth Low Energy 5.0</h1>
-                <img src="esp32c6.png" alt="BLE 5.0" class="scale-50">
-                <p>Featuring BLE 5.0, this board supports advanced, low-power Bluetooth connections for direct device communication and control.</p>
             </div>
         </div>
 
     </div>
 
-    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <!-- Prism.js JavaScript for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-c.min.js"></script>
+
     <script>
         // Check and update orientation message display
         function checkOrientation() {
