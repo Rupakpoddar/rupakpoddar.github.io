@@ -1,0 +1,231 @@
+'use strict';
+const MANIFEST = 'flutter-app-manifest';
+const TEMP = 'flutter-temp-cache';
+const CACHE_NAME = 'flutter-app-cache';
+
+const RESOURCES = {"flutter_bootstrap.js": "2bfde1707246c920b75808e2b1656acf",
+"version.json": "ea180333b41ef0bf11e3f8bc1efdcf2d",
+"index.html": "a9c8e68fe09ee52fe8245fb39783c050",
+"/": "a9c8e68fe09ee52fe8245fb39783c050",
+"main.dart.js": "cb494aefb204e082ca16622e5f9d108d",
+"flutter.js": "f393d3c16b631f36852323de8e583132",
+"favicon.png": "5dcef449791fa27946b3d35ad8803796",
+"icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
+"icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
+"icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
+"icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
+"manifest.json": "6d08f9b3c9b66bcd8563922db81a52e1",
+"assets/AssetManifest.json": "0243f7fae4a63997187c9172a1db9eca",
+"assets/NOTICES": "0a2f48948baa52ba35d98507b58f3433",
+"assets/FontManifest.json": "3f682ee38cd4f54ca5918120503bc322",
+"assets/AssetManifest.bin.json": "69065c458ee1d14a5df713bc9c37ddd8",
+"assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "e986ebe42ef785b27164c36a9abc7818",
+"assets/shaders/ink_sparkle.frag": "ecc85a2e95f5e9f53123dcaf8cb9b6ce",
+"assets/AssetManifest.bin": "08051c68206179df2be637b8faf3f93a",
+"assets/fonts/MaterialIcons-Regular.otf": "1c26451afb9df8aac0239f60efee3d2b",
+"assets/assets/rotate.png": "ba0c458769b30bf895bbc61a088558a9",
+"assets/assets/navigation/0004.png": "29f9f17cd6b6fe040786418896ec5c7c",
+"assets/assets/navigation/0000.png": "a1ae0edfcd11983ee00bfa53913c7f71",
+"assets/assets/navigation/0001.png": "b1913ba52c6a414e044985b41af6accb",
+"assets/assets/navigation/0003.png": "13e584ce87225d5a9d08b08137941b93",
+"assets/assets/navigation/0002.png": "a8e6763b1bf2768bb3edc2428291b127",
+"assets/assets/arduino/0004.png": "ba3520e2d1cb9dca326eae138212613c",
+"assets/assets/arduino/0000.png": "ac98fd5ee68c6c79fe8a275a8563426b",
+"assets/assets/arduino/0001.png": "e93f3aa8e93a50823b578b70f148d8bd",
+"assets/assets/arduino/0003.png": "9f1189dc9a00776d9d5cc6e938367929",
+"assets/assets/arduino/0002.png": "2a343ffc88231006f83d4f6ee183ccda",
+"assets/assets/esp32c6/0004.JPG": "85138b21ff502d9e69f2608a4ee954b0",
+"assets/assets/esp32c6/0000.JPG": "382911e83fe537bd57a0e6bcf4a2e3cb",
+"assets/assets/esp32c6/0000.png": "6199a4607507663946a222ccf38f926b",
+"assets/assets/esp32c6/0001.JPG": "7e6f8d113ac5b674cd2f0c9bae82a8b9",
+"assets/assets/esp32c6/0003.JPG": "95f62fcbb9c156e801f2c817748c822d",
+"assets/assets/esp32c6/0002.JPG": "38aabf3350ee6c85efa8d52d5335632b",
+"assets/assets/esp32c6/0000.gif": "496582b41fb1d37dc1862d3a834061dd",
+"assets/assets/fonts/GoogleSans-Italic.ttf": "af05b47de35fd5a5960ad1e440a4c0c7",
+"assets/assets/fonts/GoogleSans-Bold.ttf": "a19a7b108b2e3961fc855c6ea5a6546f",
+"assets/assets/fonts/GoogleSans-BoldItalic.ttf": "281acf49bbcece01beff18a4a59f9bfd",
+"assets/assets/fonts/SpaceMono.ttf": "96985f7a507afce5ab786569d2b2368f",
+"assets/assets/fonts/GoogleSans-Regular.ttf": "b61c0ab33a818a0162f3e868babcef4b",
+"assets/assets/fonts/Monaco.ttf": "8dbba50b8796bd02e1061ca5e4c42f90",
+"assets/assets/fonts/GoogleSans-MediumItalic.ttf": "b7efc2304b5103df6a75befa88d42d40",
+"assets/assets/fonts/GoogleSans-Medium.ttf": "9c51beb79b8ab173abd924ce39178f0b",
+"canvaskit/skwasm.js": "694fda5704053957c2594de355805228",
+"canvaskit/skwasm.js.symbols": "262f4827a1317abb59d71d6c587a93e2",
+"canvaskit/canvaskit.js.symbols": "48c83a2ce573d9692e8d970e288d75f7",
+"canvaskit/skwasm.wasm": "9f0c0c02b82a910d12ce0543ec130e60",
+"canvaskit/chromium/canvaskit.js.symbols": "a012ed99ccba193cf96bb2643003f6fc",
+"canvaskit/chromium/canvaskit.js": "671c6b4f8fcc199dcc551c7bb125f239",
+"canvaskit/chromium/canvaskit.wasm": "b1ac05b29c127d86df4bcfbf50dd902a",
+"canvaskit/canvaskit.js": "66177750aff65a66cb07bb44b8c6422b",
+"canvaskit/canvaskit.wasm": "1f237a213d7370cf95f443d896176460",
+"canvaskit/skwasm.worker.js": "89990e8c92bcb123999aa81f7e203b1c"};
+// The application shell files that are downloaded before a service worker can
+// start.
+const CORE = ["main.dart.js",
+"index.html",
+"flutter_bootstrap.js",
+"assets/AssetManifest.bin.json",
+"assets/FontManifest.json"];
+
+// During install, the TEMP cache is populated with the application shell files.
+self.addEventListener("install", (event) => {
+  self.skipWaiting();
+  return event.waitUntil(
+    caches.open(TEMP).then((cache) => {
+      return cache.addAll(
+        CORE.map((value) => new Request(value, {'cache': 'reload'})));
+    })
+  );
+});
+// During activate, the cache is populated with the temp files downloaded in
+// install. If this service worker is upgrading from one with a saved
+// MANIFEST, then use this to retain unchanged resource files.
+self.addEventListener("activate", function(event) {
+  return event.waitUntil(async function() {
+    try {
+      var contentCache = await caches.open(CACHE_NAME);
+      var tempCache = await caches.open(TEMP);
+      var manifestCache = await caches.open(MANIFEST);
+      var manifest = await manifestCache.match('manifest');
+      // When there is no prior manifest, clear the entire cache.
+      if (!manifest) {
+        await caches.delete(CACHE_NAME);
+        contentCache = await caches.open(CACHE_NAME);
+        for (var request of await tempCache.keys()) {
+          var response = await tempCache.match(request);
+          await contentCache.put(request, response);
+        }
+        await caches.delete(TEMP);
+        // Save the manifest to make future upgrades efficient.
+        await manifestCache.put('manifest', new Response(JSON.stringify(RESOURCES)));
+        // Claim client to enable caching on first launch
+        self.clients.claim();
+        return;
+      }
+      var oldManifest = await manifest.json();
+      var origin = self.location.origin;
+      for (var request of await contentCache.keys()) {
+        var key = request.url.substring(origin.length + 1);
+        if (key == "") {
+          key = "/";
+        }
+        // If a resource from the old manifest is not in the new cache, or if
+        // the MD5 sum has changed, delete it. Otherwise the resource is left
+        // in the cache and can be reused by the new service worker.
+        if (!RESOURCES[key] || RESOURCES[key] != oldManifest[key]) {
+          await contentCache.delete(request);
+        }
+      }
+      // Populate the cache with the app shell TEMP files, potentially overwriting
+      // cache files preserved above.
+      for (var request of await tempCache.keys()) {
+        var response = await tempCache.match(request);
+        await contentCache.put(request, response);
+      }
+      await caches.delete(TEMP);
+      // Save the manifest to make future upgrades efficient.
+      await manifestCache.put('manifest', new Response(JSON.stringify(RESOURCES)));
+      // Claim client to enable caching on first launch
+      self.clients.claim();
+      return;
+    } catch (err) {
+      // On an unhandled exception the state of the cache cannot be guaranteed.
+      console.error('Failed to upgrade service worker: ' + err);
+      await caches.delete(CACHE_NAME);
+      await caches.delete(TEMP);
+      await caches.delete(MANIFEST);
+    }
+  }());
+});
+// The fetch handler redirects requests for RESOURCE files to the service
+// worker cache.
+self.addEventListener("fetch", (event) => {
+  if (event.request.method !== 'GET') {
+    return;
+  }
+  var origin = self.location.origin;
+  var key = event.request.url.substring(origin.length + 1);
+  // Redirect URLs to the index.html
+  if (key.indexOf('?v=') != -1) {
+    key = key.split('?v=')[0];
+  }
+  if (event.request.url == origin || event.request.url.startsWith(origin + '/#') || key == '') {
+    key = '/';
+  }
+  // If the URL is not the RESOURCE list then return to signal that the
+  // browser should take over.
+  if (!RESOURCES[key]) {
+    return;
+  }
+  // If the URL is the index.html, perform an online-first request.
+  if (key == '/') {
+    return onlineFirst(event);
+  }
+  event.respondWith(caches.open(CACHE_NAME)
+    .then((cache) =>  {
+      return cache.match(event.request).then((response) => {
+        // Either respond with the cached resource, or perform a fetch and
+        // lazily populate the cache only if the resource was successfully fetched.
+        return response || fetch(event.request).then((response) => {
+          if (response && Boolean(response.ok)) {
+            cache.put(event.request, response.clone());
+          }
+          return response;
+        });
+      })
+    })
+  );
+});
+self.addEventListener('message', (event) => {
+  // SkipWaiting can be used to immediately activate a waiting service worker.
+  // This will also require a page refresh triggered by the main worker.
+  if (event.data === 'skipWaiting') {
+    self.skipWaiting();
+    return;
+  }
+  if (event.data === 'downloadOffline') {
+    downloadOffline();
+    return;
+  }
+});
+// Download offline will check the RESOURCES for all files not in the cache
+// and populate them.
+async function downloadOffline() {
+  var resources = [];
+  var contentCache = await caches.open(CACHE_NAME);
+  var currentContent = {};
+  for (var request of await contentCache.keys()) {
+    var key = request.url.substring(origin.length + 1);
+    if (key == "") {
+      key = "/";
+    }
+    currentContent[key] = true;
+  }
+  for (var resourceKey of Object.keys(RESOURCES)) {
+    if (!currentContent[resourceKey]) {
+      resources.push(resourceKey);
+    }
+  }
+  return contentCache.addAll(resources);
+}
+// Attempt to download the resource online before falling back to
+// the offline cache.
+function onlineFirst(event) {
+  return event.respondWith(
+    fetch(event.request).then((response) => {
+      return caches.open(CACHE_NAME).then((cache) => {
+        cache.put(event.request, response.clone());
+        return response;
+      });
+    }).catch((error) => {
+      return caches.open(CACHE_NAME).then((cache) => {
+        return cache.match(event.request).then((response) => {
+          if (response != null) {
+            return response;
+          }
+          throw error;
+        });
+      });
+    })
+  );
+}
