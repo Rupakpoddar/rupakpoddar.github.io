@@ -9,7 +9,7 @@
   <meta name="image" property="og:image" content="https://rupakpoddar.github.io/WebNest/previewImage.png">
 
   <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="WebNest">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
@@ -19,13 +19,6 @@
 
   <title>WebNest</title>
   <link rel="manifest" href="manifest.json">
-
-  <script>
-    // The value below is injected by flutter build, do not touch.
-    const serviceWorkerVersion = "698795298";
-  </script>
-  <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js" defer></script>
 
   <style>
     .loading {
@@ -43,9 +36,9 @@
     .loader {
       border: 16px solid transparent;
       border-radius: 50%;
-      border-top: 16px solid #E91E63;
+      border-top: 16px solid #FF8F00;
       border-right: 16px solid transparent;
-      border-bottom: 16px solid #3F51B5;
+      border-bottom: 16px solid #EF5350;
       border-left: 16px solid transparent;
       width: 120px;
       height: 120px;
@@ -71,27 +64,12 @@
       }
     }
   </style>
+
 </head>
 <body>
-<!--   <script>
-    window.addEventListener('load', function(ev) {
-      // Download main.dart.js
-      _flutter.loader.load({
-        serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        },
-        onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
-            appRunner.runApp();
-          });
-        }
-      });
-    });
-  </script> -->
-
   <div class="loading">
     <div class="loader"></div>
   </div>
-  <script src="main.dart.js" type="application/javascript"></script>
+  <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
