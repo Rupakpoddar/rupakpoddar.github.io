@@ -1,75 +1,195 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <base href="/web/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rupak Poddar</title>
+    <link rel="icon" type="image/png" href="https://rupakpoddar.github.io/Backup%20Assets/favicon.png">
+    <meta name="image" property="og:image" content="https://rupakpoddar.github.io/Backup%20Assets/previewImage.jpg">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Product+Sans:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Product Sans', sans-serif;
+        }
 
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Developer Portfolio">
-  <meta name="image" property="og:image" content="https://rupakpoddar.github.io/Backup%20Assets/previewImage.png">
+        body {
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            color: white;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 2rem;
+        }
 
-  <!-- iOS meta tags & icons -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Rupak Poddar">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+        }
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+        .profile-img {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            margin: 2rem auto;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
 
-  <title>Rupak Poddar</title>
-  <link rel="manifest" href="manifest.json">
+        .profile-img:hover {
+            transform: scale(1.1);
+            border-color: #ffffff;
+        }
 
-  <style>
-    .loading {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      -ms-transform: translate(-50%, -50%);
-      transform: translate(-50%, -50%);
-    }
-    
-    .loader {
-      border: 16px solid transparent;
-      border-radius: 50%;
-      border-top: 16px solid #FF8F00;
-      border-right: 16px solid transparent;
-      border-bottom: 16px solid #EF5350;
-      border-left: 16px solid transparent;
-      width: 120px;
-      height: 120px;
-      -webkit-animation: spin 1s linear infinite;
-      animation: spin 1s linear infinite;
-    }
-    
-    @-webkit-keyframes spin {
-      0% {
-        -webkit-transform: rotate(0deg);
-      }
-      100% {
-        -webkit-transform: rotate(360deg);
-      }
-    }
-    
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-  </style>
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+        }
+
+        .link-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .link-card a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .link-card img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .link-card:hover img {
+            transform: scale(1.15);
+        }
+
+        /* Brand-specific background colors */
+        .linkedin { background-color: #0A66C2; }
+        .github { background-color: #6E5494; }
+        .arduino { background-color: #00979D; }
+        .appstore { background-color: #0D96F6; }
+        .googleplay { background-color: #01A862; }
+        .youtube { background-color: #FF0000; }
+        .instagram { background-color: #E4405F; }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .profile-img {
+                width: 180px;
+                height: 180px;
+            }
+
+            .links-grid {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            
+            .link-card img {
+                width: 35px;
+                height: 35px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="loading">
-    <div class="loader"></div>
-  </div>
-  <script src="flutter_bootstrap.js" async></script>
+    <div class="container">
+        <div class="profile-img">
+            <img src="https://rupakpoddar.github.io/Backup%20Assets/previewImage.jpg" alt="Rupak Poddar">
+        </div>
+        
+        <h1>Rupak Poddar</h1>
+
+        <div class="links-grid">
+            <div class="link-card linkedin">
+                <a href="https://www.linkedin.com/in/poddarrupak/" target="_blank">
+                    <img src="https://rupakpoddar.github.io/Backup%20Assets/Logos/LinkedIn.png" alt="LinkedIn">
+                    LinkedIn
+                </a>
+            </div>
+
+            <div class="link-card github">
+                <a href="https://github.com/rupakpoddar" target="_blank">
+                    <img src="https://rupakpoddar.github.io/Backup%20Assets/Logos/GitHub.png" alt="GitHub">
+                    GitHub
+                </a>
+            </div>
+
+            <div class="link-card arduino">
+                <a href="https://docs.arduino.cc/libraries/firebase/" target="_blank">
+                    <img src="https://rupakpoddar.github.io/Backup%20Assets/Logos/Arduino.png" alt="Arduino">
+                    Arduino Firebase
+                </a>
+            </div>
+
+            <div class="link-card appstore">
+                <a href="https://apps.apple.com/us/developer/rupak-poddar/id1712320026" target="_blank">
+                    <img src="https://rupakpoddar.github.io/Backup%20Assets/Logos/AppStore.png" alt="App Store">
+                    Apple App Store
+                </a>
+            </div>
+
+            <div class="link-card googleplay">
+                <a href="https://play.google.com/store/apps/dev?id=6575254548062023541" target="_blank">
+                    <img src="https://rupakpoddar.github.io/Backup%20Assets/Logos/GooglePlay.png" alt="Google Play">
+                    Google Play Store
+                </a>
+            </div>
+
+            <div class="link-card youtube">
+                <a href="https://www.youtube.com/rupakpoddar" target="_blank">
+                    <img src="https://rupakpoddar.github.io/Backup%20Assets/Logos/YouTube.png" alt="YouTube">
+                    YouTube
+                </a>
+            </div>
+
+            <div class="link-card instagram">
+                <a href="https://www.instagram.com/poddarrupak/" target="_blank">
+                    <img src="https://rupakpoddar.github.io/Backup%20Assets/Logos/Instagram.png" alt="Instagram">
+                    Instagram
+                </a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
