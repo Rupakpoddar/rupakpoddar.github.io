@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webnest - Home Automation</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <meta property="og:title" content="Webnest - Home Automation">
+    <meta property="og:description" content="Modern home automation dashboard for smart devices">
+    <meta property="og:image" content="assets/previewImage.png">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Webnest - Home Automation">
+    <meta name="twitter:description" content="Modern home automation dashboard for smart devices">
+    <meta name="twitter:image" content="assets/previewImage.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f5;
+            --bg-card: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --accent: #2196F3;
+            --accent-hover: #1976D2;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --border: #e0e0e0;
+            --device-off: #f0f0f0;
+            --device-on: #2196F3;
+            --icon-filter: none;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-primary: #121212;
+                --bg-secondary: #1e1e1e;
+                --bg-card: #2a2a2a;
+                --text-primary: #ffffff;
+                --text-secondary: #b0b0b0;
+                --shadow: rgba(0, 0, 0, 0.3);
+                --border: #404040;
+                --device-off: #2a2a2a;
+                --device-on: #1976D2;
+                --icon-filter: invert(1);
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-section img {
+            width: 40px;
+            height: 40px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .firebase-url-input {
+            padding: 10px 15px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            width: 300px;
+            transition: all 0.3s;
+        }
+
+        .firebase-url-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .firebase-url-input.connected {
+            border-color: var(--accent);
+        }
+
+        .firebase-url-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .firebase-url-input {
+                width: 100%;
+            }
+        }
+
+        button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .content-area {
+            min-height: 500px;
+        }
+
+        .devices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 640px) {
+            .devices-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 15px;
+            }
+        }
+
+        .device-card {
+            background-color: var(--device-off);
+            border-radius: 16px;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 8px var(--shadow);
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .device-card.active {
+            background-color: var(--device-on);
+            color: white;
+        }
+
+        .device-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px var(--shadow);
+        }
+
+        .device-icon-area {
+            padding: 20px 20px 10px;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+        }
+
+        .device-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto;
+            filter: var(--icon-filter);
+            transition: filter 0.3s;
+        }
+
+        .device-card.active .device-icon {
+            filter: brightness(0) invert(1);
+        }
+
+        .device-info-area {
+            padding: 0 20px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .device-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 5px;
+            word-break: break-word;
+        }
+
+        .device-status {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 3;
+        }
+
+        .device-card:hover .delete-btn {
+            opacity: 1;
+        }
+
+        .slider-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.15);
+            transition: width 0.3s;
+            pointer-events: none;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: var(--bg-card);
+            padding: 30px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal h2 {
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .switch-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background-color: var(--bg-secondary);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .switch-container:hover {
+            background-color: var(--border);
+        }
+
+        .switch {
+            position: relative;
+            width: 50px;
+            height: 28px;
+            background-color: var(--border);
+            border-radius: 34px;
+            transition: background-color 0.3s;
+        }
+
+        .switch.active {
+            background-color: var(--accent);
+        }
+
+        .switch-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .switch.active .switch-slider {
+            transform: translateX(22px);
+        }
+
+        .icon-selector {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 480px) {
+            .icon-selector {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .icon-option {
+            padding: 15px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+            background-color: var(--bg-secondary);
+        }
+
+        .icon-option img {
+            width: 40px;
+            height: 40px;
+            filter: var(--icon-filter);
+        }
+
+        .icon-option:hover, .icon-option.selected {
+            border-color: var(--accent);
+            background-color: var(--accent);
+        }
+
+        .icon-option.selected img {
+            filter: brightness(0) invert(1);
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state img {
+            width: 100px;
+            height: 100px;
+            opacity: 0.5;
+            margin-bottom: 20px;
+        }
+
+        .sync-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--accent);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px var(--shadow);
+            font-size: 0.9rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s;
+        }
+
+        .sync-indicator.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 640px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .app-container {
+                padding: 15px;
+            }
+            
+            header {
+                display: grid;
+                grid-template-columns: 1fr auto;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .header-controls {
+                grid-column: 1 / -1;
+                width: 100%;
+                display: flex;
+                gap: 10px;
+            }
+            
+            .firebase-url-input {
+                flex: 1;
+            }
+        }
+
+        .secondary-btn {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .secondary-btn:hover {
+            background-color: var(--border);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo-section">
+                <img src="assets/webnest.png" alt="Webnest Logo">
+                <h1>Webnest</h1>
+            </div>
+            <div class="header-controls">
+                <input 
+                    type="url" 
+                    id="firebaseUrl" 
+                    class="firebase-url-input" 
+                    placeholder="Firebase URL (e.g., https://project.firebaseio.com)"
+                    onchange="updateFirebaseUrl()"
+                >
+                <button onclick="showAddDevice()">Add Device</button>
+            </div>
+        </header>
+
+        <div class="content-area" id="content">
+            <!-- Content will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <!-- Add Device Modal -->
+    <div class="modal" id="addDeviceModal">
+        <div class="modal-content">
+            <h2>Add New Device</h2>
+            <form id="addDeviceForm">
+                <div class="form-group">
+                    <label for="deviceName">Device Name</label>
+                    <input type="text" id="deviceName" placeholder="Living Room Light" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Select Icon</label>
+                    <div class="icon-selector" id="iconSelector">
+                        <div class="icon-option" onclick="selectIcon('icon1.png', this)">
+                            <img src="assets/icon1.png" alt="Icon 1">
+                        </div>
+                        <div class="icon-option" onclick="selectIcon('icon2.png', this)">
+                            <img src="assets/icon2.png" alt="Icon 2">
+                        </div>
+                        <div class="icon-option" onclick="selectIcon('icon3.png', this)">
+                            <img src="assets/icon3.png" alt="Icon 3">
+                        </div>
+                        <div class="icon-option" onclick="selectIcon('icon4.png', this)">
+                            <img src="assets/icon4.png" alt="Icon 4">
+                        </div>
+                        <div class="icon-option" onclick="selectIcon('icon5.png', this)">
+                            <img src="assets/icon5.png" alt="Icon 5">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="switch-container" onclick="toggleSliderSwitch()">
+                        <label style="margin: 0; cursor: pointer;">Enable Brightness/Speed Control</label>
+                        <div class="switch" id="sliderSwitch">
+                            <div class="switch-slider"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="button" onclick="closeModal()" class="secondary-btn">Cancel</button>
+                    <button type="submit">Add Device</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="sync-indicator" id="syncIndicator">
+        Synced ✓
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <script>
+        let devices = {};
+        let selectedIcon = 'icon1.png';
+        let sliderEnabled = false;
+        let sortable = null;
+        let database = null;
+        let webnestRef = null;
+        let firebaseUrl = '';
+
+        // Initialize the app
+        function init() {
+            // Try to load Firebase URL from localStorage
+            const savedUrl = localStorage.getItem('webnestFirebaseUrl');
+            if (savedUrl) {
+                document.getElementById('firebaseUrl').value = savedUrl;
+                initFirebase(savedUrl);
+            }
+            
+            // Set first icon as default
+            const firstIcon = document.querySelector('.icon-option');
+            if (firstIcon) {
+                selectIcon('icon1.png', firstIcon);
+            }
+            
+            showDashboard();
+        }
+
+        // Update Firebase URL
+        function updateFirebaseUrl() {
+            const url = document.getElementById('firebaseUrl').value.trim();
+            if (url) {
+                localStorage.setItem('webnestFirebaseUrl', url);
+                initFirebase(url);
+            } else {
+                localStorage.removeItem('webnestFirebaseUrl');
+                updateConnectionStatus(false);
+                devices = {};
+                showDashboard();
+            }
+        }
+
+        // Initialize Firebase
+        function initFirebase(url) {
+            if (!url) return;
+            
+            try {
+                firebaseUrl = url;
+                
+                const firebaseConfig = {
+                    databaseURL: url
+                };
+                
+                // Initialize Firebase
+                if (firebase.apps.length) {
+                    firebase.apps[0].delete();
+                }
+                firebase.initializeApp(firebaseConfig);
+                
+                database = firebase.database();
+                webnestRef = database.ref('webnest');
+                
+                // Listen for changes
+                webnestRef.on('value', (snapshot) => {
+                    const data = snapshot.val();
+                    devices = data || {};
+                    showDashboard();
+                    updateConnectionStatus(true);
+                }, (error) => {
+                    console.error('Firebase connection error:', error);
+                    updateConnectionStatus(false);
+                });
+                
+            } catch (error) {
+                console.error('Error initializing Firebase:', error);
+                alert('Error connecting to Firebase. Please check your URL.');
+                updateConnectionStatus(false);
+            }
+        }
+
+        // Update connection status
+        function updateConnectionStatus(connected) {
+            const input = document.getElementById('firebaseUrl');
+            if (connected) {
+                input.classList.add('connected');
+            } else {
+                input.classList.remove('connected');
+            }
+        }
+
+        // Show sync indicator
+        function showSyncIndicator() {
+            const indicator = document.getElementById('syncIndicator');
+            indicator.classList.add('active');
+            setTimeout(() => indicator.classList.remove('active'), 2000);
+        }
+
+        // Show dashboard
+        function showDashboard() {
+            const content = document.getElementById('content');
+            const deviceNames = Object.keys(devices);
+            
+            if (deviceNames.length === 0) {
+                content.innerHTML = `
+                    <div class="empty-state">
+                        <img src="assets/webnest.png" alt="Webnest">
+                        <h2>No devices yet</h2>
+                        <p>${firebaseUrl ? 'Add your first smart device to get started' : 'Enter Firebase URL and add devices'}</p>
+                        ${firebaseUrl ? '<button onclick="showAddDevice()" style="margin-top: 20px;">Add Device</button>' : ''}
+                    </div>
+                `;
+                return;
+            }
+            
+            content.innerHTML = '<div class="devices-grid" id="devicesGrid"></div>';
+            const grid = document.getElementById('devicesGrid');
+            
+            // Sort devices by order if available
+            const sortedDevices = deviceNames.sort((a, b) => {
+                const orderA = devices[a].order !== undefined ? devices[a].order : 999;
+                const orderB = devices[b].order !== undefined ? devices[b].order : 999;
+                return orderA - orderB;
+            });
+            
+            sortedDevices.forEach((deviceName) => {
+                const card = createDeviceCard(deviceName, devices[deviceName]);
+                grid.appendChild(card);
+            });
+            
+            // Enable drag and drop
+            if (sortable) sortable.destroy();
+            sortable = new Sortable(grid, {
+                animation: 150,
+                ghostClass: 'sortable-ghost',
+                handle: '.device-card',
+                draggable: '.device-card',
+                onEnd: function(evt) {
+                    // Get all cards and update their order
+                    const cards = grid.querySelectorAll('.device-card');
+                    const updates = {};
+                    
+                    cards.forEach((card, index) => {
+                        const deviceName = card.dataset.deviceName;
+                        updates[`${deviceName}/order`] = index;
+                    });
+                    
+                    // Update Firebase with new order
+                    if (webnestRef) {
+                        webnestRef.update(updates).then(() => {
+                            showSyncIndicator();
+                        });
+                    }
+                }
+            });
+        }
+
+        // Create device card
+        function createDeviceCard(deviceName, device) {
+            const card = document.createElement('div');
+            card.className = `device-card ${device.state ? 'active' : ''}`;
+            card.dataset.deviceName = deviceName;
+            
+            const sliderValue = device.sliderEnabled && device.state ? device.sliderValue : 0;
+            
+            card.innerHTML = `
+                <div class="slider-overlay" style="width: ${sliderValue}%"></div>
+                <button class="delete-btn" onclick="deleteDevice('${deviceName}', event)">Delete</button>
+                <div class="device-icon-area" onclick="toggleDevice('${deviceName}', event)">
+                    <img src="assets/${device.icon}" alt="Device Icon" class="device-icon">
+                </div>
+                <div class="device-info-area">
+                    <div class="device-name">${deviceName}</div>
+                    <div class="device-status">${device.state ? 'ON' : 'OFF'} ${device.sliderEnabled ? `(${device.sliderValue}%)` : ''}</div>
+                </div>
+            `;
+            
+            if (device.sliderEnabled) {
+                setupSlider(card, deviceName);
+            }
+            
+            return card;
+        }
+
+        // Toggle device state
+        function toggleDevice(deviceName, event) {
+            event.stopPropagation();
+            if (!webnestRef) return;
+            
+            const device = devices[deviceName];
+            const newState = !device.state;
+            
+            const updates = {
+                state: newState
+            };
+            
+            // Don't change slider value, just update the state
+            if (!newState) {
+                // When turning OFF, keep the slider value in Firebase
+            } else {
+                // When turning ON, use the existing slider value from Firebase
+            }
+            
+            webnestRef.child(deviceName).update(updates).then(() => {
+                showSyncIndicator();
+            });
+        }
+
+        // Setup slider functionality
+        function setupSlider(card, deviceName) {
+            const infoArea = card.querySelector('.device-info-area');
+            let isSliding = false;
+            
+            const updateSlider = (e) => {
+                if (!isSliding || !devices[deviceName].state || !devices[deviceName].sliderEnabled) return;
+                
+                const rect = card.getBoundingClientRect();
+                const x = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+                const percentage = Math.max(0, Math.min(100, ((x - rect.left) / rect.width) * 100));
+                
+                card.querySelector('.slider-overlay').style.width = percentage + '%';
+                card.querySelector('.device-status').textContent = `ON (${Math.round(percentage)}%)`;
+            };
+            
+            const startSlide = (e) => {
+                if (!devices[deviceName].state || !devices[deviceName].sliderEnabled) return;
+                isSliding = true;
+                e.preventDefault();
+                e.stopPropagation();
+            };
+            
+            const endSlide = (e) => {
+                if (isSliding && webnestRef && devices[deviceName].state) {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.type.includes('touch') ? e.changedTouches[0].clientX : e.clientX;
+                    const percentage = Math.max(0, Math.min(100, ((x - rect.left) / rect.width) * 100));
+                    
+                    webnestRef.child(deviceName).update({
+                        sliderValue: Math.round(percentage)
+                    }).then(() => {
+                        showSyncIndicator();
+                    });
+                }
+                isSliding = false;
+            };
+            
+            infoArea.addEventListener('mousedown', startSlide);
+            infoArea.addEventListener('touchstart', startSlide, { passive: false });
+            document.addEventListener('mousemove', updateSlider);
+            document.addEventListener('touchmove', updateSlider, { passive: false });
+            document.addEventListener('mouseup', endSlide);
+            document.addEventListener('touchend', endSlide);
+        }
+
+        // Delete device
+        function deleteDevice(deviceName, event) {
+            event.stopPropagation();
+            if (!webnestRef) return;
+            
+            if (confirm(`Are you sure you want to delete "${deviceName}"?`)) {
+                webnestRef.child(deviceName).remove().then(() => {
+                    showSyncIndicator();
+                });
+            }
+        }
+
+        // Show add device modal
+        function showAddDevice() {
+            if (!firebaseUrl) {
+                alert('Please enter a Firebase URL first');
+                return;
+            }
+            
+            document.getElementById('addDeviceModal').style.display = 'flex';
+            document.getElementById('deviceName').value = '';
+            sliderEnabled = false;
+            document.getElementById('sliderSwitch').classList.remove('active');
+            
+            // Select first icon by default
+            const firstIcon = document.querySelector('.icon-option');
+            if (firstIcon) {
+                selectIcon('icon1.png', firstIcon);
+            }
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('addDeviceModal').style.display = 'none';
+            document.getElementById('addDeviceForm').reset();
+        }
+
+        // Toggle slider switch
+        function toggleSliderSwitch() {
+            const switchEl = document.getElementById('sliderSwitch');
+            sliderEnabled = !sliderEnabled;
+            if (sliderEnabled) {
+                switchEl.classList.add('active');
+            } else {
+                switchEl.classList.remove('active');
+            }
+        }
+
+        // Select icon
+        function selectIcon(icon, element) {
+            document.querySelectorAll('.icon-option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedIcon = icon;
+        }
+
+        // Add device form submission
+        document.getElementById('addDeviceForm').onsubmit = function(e) {
+            e.preventDefault();
+            if (!webnestRef) return;
+            
+            const deviceName = document.getElementById('deviceName').value.trim();
+            
+            // Check if device already exists
+            if (devices[deviceName]) {
+                alert(`Device "${deviceName}" already exists!`);
+                return;
+            }
+            
+            const deviceData = {
+                icon: selectedIcon,
+                sliderEnabled: sliderEnabled,
+                state: false,
+                sliderValue: 100,
+                order: Object.keys(devices).length
+            };
+            
+            webnestRef.child(deviceName).set(deviceData).then(() => {
+                showSyncIndicator();
+                closeModal();
+            }).catch(error => {
+                alert('Error adding device: ' + error.message);
+            });
+        };
+
+        // Initialize app
+        init();
+    </script>
+</body>
+</html>
