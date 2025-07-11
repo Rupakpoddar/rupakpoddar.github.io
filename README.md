@@ -8,8 +8,8 @@
 </a>  
 <br>
 
-<a href="https://rupakpoddar.github.io/WebNest/">
-  <img src="https://img.shields.io/badge/WebNest-FFBF00?style=for-the-badge&logoColor=black" />
+<a href="https://rupakpoddar.github.io/Webnest/">
+  <img src="https://img.shields.io/badge/Webnest-FFBF00?style=for-the-badge&logoColor=black" />
 </a>  
 <br>
 
