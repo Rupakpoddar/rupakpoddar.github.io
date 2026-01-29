@@ -31,8 +31,3 @@
 <a href="https://rupakpoddar.github.io/esp32c6/">
   <img src="https://img.shields.io/badge/ESP32C6-FFBF00?style=for-the-badge&logoColor=black" />
 </a>  
-<br>
-
-<a href="https://rupakpoddar.github.io/bettersearch/">
-  <img src="https://img.shields.io/badge/Better%20Search-FFBF00?style=for-the-badge&logoColor=black" />
-</a> 
