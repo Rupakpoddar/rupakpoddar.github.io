@@ -1,6 +1,6 @@
 /* Service worker - cache-first offline strategy.
    Bump CACHE_VERSION whenever any cached asset changes. */
-const CACHE_VERSION = 'wordle-v1';
+const CACHE_VERSION = 'wordle-v2';
 const ASSETS = [
   './',
   './index.html',

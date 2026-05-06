@@ -227,9 +227,11 @@ body.contrast {
   touch-action: manipulation;
 }
 .key {
-  flex: 1 1 auto;
+  /* basis 0 makes every letter key share the row equally regardless of glyph width */
+  flex: 1 1 0;
   height: 58px;
   min-width: 0;
+  padding: 0;
   border: 0;
   border-radius: 4px;
   background: var(--key-bg);
@@ -247,7 +249,7 @@ body.contrast {
 }
 .key:hover { filter: brightness(.95); }
 .key:active { filter: brightness(.85); }
-.key.wide { flex: 1.5 1 auto; font-size: 0.78rem; padding: 0 4px; }
+.key.wide { flex: 1.5 1 0; font-size: 0.78rem; padding: 0 4px; }
 .key.correct { background: var(--correct); color: var(--on-tile); }
 .key.present { background: var(--present); color: var(--on-tile); }
 .key.absent  { background: var(--absent);  color: var(--on-tile); }
