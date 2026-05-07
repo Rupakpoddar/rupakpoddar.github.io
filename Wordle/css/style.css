@@ -85,11 +85,11 @@ body.contrast {
 .topbar-right { justify-content: flex-end; }
 .title {
   margin: 0;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-weight: 800;
-  font-size: 32px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 34px;
+  letter-spacing: 0;
   text-align: center;
   line-height: 1;
 }
@@ -214,21 +214,23 @@ body.contrast {
 
 /* ---------- Keyboard ---------- */
 .keyboard {
-  padding: 8px 4px 12px;
+  /* Bottom padding clears the iPhone home indicator when installed as a PWA */
+  padding: 8px 4px max(20px, env(safe-area-inset-bottom, 20px));
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 .kb-row {
-  display: flex;
+  /* 20-column grid so alpha keys span 2 cols, wide keys span 3, spacers span 1.
+     This keeps every alphabet key the same width across all three rows. */
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
   gap: 6px;
-  justify-content: center;
   width: 100%;
   touch-action: manipulation;
 }
 .key {
-  /* basis 0 makes every letter key share the row equally regardless of glyph width */
-  flex: 1 1 0;
+  grid-column: span 2;
   height: 58px;
   min-width: 0;
   padding: 0;
@@ -249,7 +251,8 @@ body.contrast {
 }
 .key:hover { filter: brightness(.95); }
 .key:active { filter: brightness(.85); }
-.key.wide { flex: 1.5 1 0; font-size: 0.78rem; padding: 0 4px; }
+.key.wide { grid-column: span 3; font-size: 0.78rem; padding: 0 4px; }
+.kb-spacer { grid-column: span 1; } /* invisible half-key offset for row 2 */
 .key.correct { background: var(--correct); color: var(--on-tile); }
 .key.present { background: var(--present); color: var(--on-tile); }
 .key.absent  { background: var(--absent);  color: var(--on-tile); }

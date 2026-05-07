@@ -187,7 +187,7 @@
   /* ---------- Keyboard ---------- */
   const KB_LAYOUT = [
     ['q','w','e','r','t','y','u','i','o','p'],
-    ['a','s','d','f','g','h','j','k','l'],
+    ['SPACER','a','s','d','f','g','h','j','k','l','SPACER'],
     ['ENTER','z','x','c','v','b','n','m','BACK'],
   ];
   function buildKeyboard() {
@@ -196,6 +196,13 @@
       const rowEl = document.createElement('div');
       rowEl.className = 'kb-row';
       row.forEach(k => {
+        if (k === 'SPACER') {
+          const sp = document.createElement('div');
+          sp.className = 'kb-spacer';
+          sp.setAttribute('aria-hidden', 'true');
+          rowEl.appendChild(sp);
+          return;
+        }
         const btn = document.createElement('button');
         btn.className = 'key' + (k === 'ENTER' || k === 'BACK' ? ' wide' : '');
         btn.dataset.key = k;
