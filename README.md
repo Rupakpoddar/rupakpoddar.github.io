@@ -35,4 +35,9 @@
 
 <a href="https://rupakpoddar.github.io/Wordle/">
   <img src="https://img.shields.io/badge/Wordle-FFBF00?style=for-the-badge&logoColor=black" />
+</a>  
+<br>
+
+<a href="https://rupakpoddar.github.io/Connections/">
+  <img src="https://img.shields.io/badge/Connections-FFBF00?style=for-the-badge&logoColor=black" />
 </a> 
