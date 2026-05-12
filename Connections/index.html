@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Connections</title>
+<meta name="description" content="Group words by connection. Play offline anytime." />
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.webmanifest" />
+<meta name="theme-color" content="#ffffff" />
+
+<!-- iOS PWA -->
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="Connections" />
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+
+<!-- Favicons -->
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="icons/favicon-64.png" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="app-header">
+  <div class="header-inner">
+    <button class="icon-btn" id="menu-btn" aria-label="Menu" title="Menu">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <h1 class="brand">Connections</h1>
+    <button class="icon-btn" id="stats-btn" aria-label="Stats" title="Stats">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="app">
+  <section class="puzzle-meta">
+    <div class="meta-row">
+      <span id="mode-label" class="meta-mode">Daily</span>
+      <span class="meta-sep">·</span>
+      <span id="puzzle-id" class="meta-id">#—</span>
+      <span class="meta-sep">·</span>
+      <span id="puzzle-date" class="meta-date">—</span>
+    </div>
+    <p class="prompt">Create four groups of four!</p>
+  </section>
+
+  <!-- Solved groups appear here, above the grid -->
+  <section class="solved-list" id="solved-list" aria-live="polite"></section>
+
+  <!-- Toast for "One away" etc. -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- 4x4 grid of word tiles -->
+  <section class="grid" id="grid" aria-label="Word grid"></section>
+
+  <section class="mistakes">
+    <span class="mistakes-label">Mistakes remaining:</span>
+    <span class="mistake-dots" id="mistake-dots" aria-label="Mistakes remaining">
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    </span>
+  </section>
+
+  <section class="controls">
+    <button class="btn ghost" id="shuffle-btn">Shuffle</button>
+    <button class="btn ghost" id="deselect-btn" disabled>Deselect all</button>
+    <button class="btn primary" id="submit-btn" disabled>Submit</button>
+  </section>
+</main>
+
+<!-- Menu drawer -->
+<dialog class="drawer" id="menu-drawer" aria-label="Menu">
+  <div class="drawer-inner">
+    <button class="drawer-close" data-close-menu aria-label="Close">✕</button>
+    <h2>Menu</h2>
+    <nav class="menu-list">
+      <button class="menu-item" data-action="daily">
+        <strong>Daily</strong>
+        <span>Today's puzzle</span>
+      </button>
+      <button class="menu-item" data-action="practice-random">
+        <strong>Practice — random</strong>
+        <span>Pick a random puzzle from the archive</span>
+      </button>
+      <button class="menu-item" data-action="archive">
+        <strong>Archive</strong>
+        <span>Choose any past puzzle</span>
+      </button>
+      <button class="menu-item" data-action="how-to">
+        <strong>How to play</strong>
+        <span>Rules &amp; tips</span>
+      </button>
+      <button class="menu-item" data-action="install" id="install-item" hidden>
+        <strong>Install app</strong>
+        <span>Add Connections to your device</span>
+      </button>
+      <button class="menu-item" data-action="reset">
+        <strong>Reset progress</strong>
+        <span>Clear stats &amp; practice history</span>
+      </button>
+    </nav>
+    <p class="version">Offline puzzles: <span id="puzzle-count">—</span></p>
+  </div>
+</dialog>
+
+<!-- Archive picker -->
+<dialog class="drawer" id="archive-drawer" aria-label="Archive">
+  <div class="drawer-inner">
+    <button class="drawer-close" data-close-archive aria-label="Close">✕</button>
+    <h2>Archive</h2>
+    <p class="muted">Tap any puzzle to play it. <span id="played-count">0</span> of <span id="archive-total">0</span> played.</p>
+    <div class="archive-search">
+      <input type="search" id="archive-search-input" placeholder="Jump to puzzle # or date…" inputmode="search" />
+    </div>
+    <div class="archive-list" id="archive-list"></div>
+  </div>
+</dialog>
+
+<!-- Stats modal -->
+<dialog class="modal" id="stats-modal" aria-label="Statistics">
+  <div class="modal-inner">
+    <button class="modal-close" data-close-stats aria-label="Close">✕</button>
+    <h2>Statistics</h2>
+    <div class="stats-grid">
+      <div><strong id="stat-played">0</strong><span>Played</span></div>
+      <div><strong id="stat-winpct">0</strong><span>Win %</span></div>
+      <div><strong id="stat-streak">0</strong><span>Streak</span></div>
+      <div><strong id="stat-maxstreak">0</strong><span>Max streak</span></div>
+    </div>
+
+    <h3>Perfect games (no mistakes)</h3>
+    <p class="stat-perfect"><strong id="stat-perfect">0</strong></p>
+
+    <h3>Mistakes distribution</h3>
+    <div class="dist" id="dist"></div>
+  </div>
+</dialog>
+
+<!-- End-of-game modal -->
+<dialog class="modal" id="end-modal" aria-label="Result">
+  <div class="modal-inner">
+    <button class="modal-close" data-close-end aria-label="Close">✕</button>
+    <h2 id="end-title">Nice!</h2>
+    <p id="end-sub" class="muted"></p>
+    <pre class="emoji-grid" id="emoji-grid"></pre>
+    <div class="end-actions">
+      <button class="btn ghost" id="copy-result">Copy result</button>
+      <button class="btn primary" id="next-puzzle">Next puzzle</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- How to play -->
+<dialog class="modal" id="how-modal" aria-label="How to play">
+  <div class="modal-inner">
+    <button class="modal-close" data-close-how aria-label="Close">✕</button>
+    <h2>How to play</h2>
+    <ul class="how-list">
+      <li>Find groups of four items that share something in common.</li>
+      <li>Select four items and tap <em>Submit</em> to check your guess.</li>
+      <li>You can make up to four mistakes before the game ends.</li>
+      <li>Categories range in difficulty: <span class="chip y">yellow</span> easiest, then <span class="chip g">green</span>, <span class="chip b">blue</span>, <span class="chip p">purple</span> hardest.</li>
+      <li>Each puzzle has exactly one solution. Watch out for words that could fit more than one group.</li>
+    </ul>
+  </div>
+</dialog>
+
+<script src="app.js" defer></script>
+</body>
+</html>
