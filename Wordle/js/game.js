@@ -45,11 +45,25 @@
     const today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
     return Math.floor((today - EPOCH) / 86400000);
   }
+
+  // Deterministic Fisher-Yates shuffle using a fixed seed so everyone gets
+  // the same non-sequential word order without relying on list position.
+  function seededShuffle(arr, seed) {
+    const a = arr.slice();
+    let s = seed >>> 0;
+    for (let i = a.length - 1; i > 0; i--) {
+      s = (Math.imul(s, 1664525) + 1013904223) >>> 0;
+      const j = s % (i + 1);
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  const SHUFFLED_ANSWERS = seededShuffle(ANSWERS, 0xA3F7C219);
+
   function dailyAnswer() {
     const d = dayNumber();
-    // Modulo to wrap past the end of the list (this list only has ~2300 words)
-    const idx = ((d % ANSWERS.length) + ANSWERS.length) % ANSWERS.length;
-    return { word: ANSWERS[idx], dayNum: d };
+    const idx = ((d % SHUFFLED_ANSWERS.length) + SHUFFLED_ANSWERS.length) % SHUFFLED_ANSWERS.length;
+    return { word: SHUFFLED_ANSWERS[idx], dayNum: d };
   }
   function randomAnswer() {
     return ANSWERS[Math.floor(Math.random() * ANSWERS.length)];

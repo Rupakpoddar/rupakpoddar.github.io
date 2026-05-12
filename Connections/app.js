@@ -108,8 +108,6 @@ const deselectBtn = $('#deselect-btn');
 const shuffleBtn = $('#shuffle-btn');
 const toastEl = $('#toast');
 const modeLabel = $('#mode-label');
-const puzzleIdEl = $('#puzzle-id');
-const puzzleDateEl = $('#puzzle-date');
 
 const menuDrawer  = $('#menu-drawer');
 const archiveDrawer = $('#archive-drawer');
@@ -165,8 +163,6 @@ function startPuzzle(puzzle, mode) {
 
   // Header
   modeLabel.textContent = mode === 'daily' ? 'Daily' : 'Practice';
-  puzzleIdEl.textContent = `#${puzzle.n}`;
-  puzzleDateEl.textContent = prettyDate(puzzle.d);
 
   render();
 }
@@ -447,14 +443,13 @@ function showEndModal() {
         : { t: 'Solved!', s: `${MAX_MISTAKES - state.mistakes} mistake${MAX_MISTAKES - state.mistakes === 1 ? '' : 's'} remaining.` })
     : { t: 'Next time!', s: 'Better luck on the next puzzle.' };
   titleEl.textContent = result.t;
-  subEl.textContent = `${state.mode === 'daily' ? 'Daily' : 'Practice'} · Connections #${state.current.n}${result.s ? ' — ' + result.s : ''}`;
+  subEl.textContent = `${state.mode === 'daily' ? 'Daily' : 'Practice'}${result.s ? ' — ' + result.s : ''}`;
   emojiEl.textContent = grid || '(no guesses)';
   endModal.showModal();
 }
 
 async function copyResult() {
-  const header = `Connections #${state.current.n}\n`;
-  const text = header + buildEmojiGrid();
+  const text = buildEmojiGrid();
   try {
     await navigator.clipboard.writeText(text);
     toast('Result copied');

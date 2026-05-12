@@ -1,6 +1,6 @@
 // Service Worker — gives full offline support after first load.
 // Bump CACHE_VERSION whenever you redeploy with file changes.
-const CACHE_VERSION = 'connections-v1';
+const CACHE_VERSION = 'connections-v2';
 
 // All paths are relative to the SW location (the app root).
 const PRECACHE_URLS = [
