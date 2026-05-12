@@ -169,11 +169,23 @@ function startPuzzle(puzzle, mode) {
 
 /* ---------- Render ---------- */
 
+function syncSolvedRowHeights() {
+  const tile = grid.querySelector('.tile');
+  if (!tile) return;
+  const h = tile.getBoundingClientRect().height;
+  if (h > 0) {
+    solvedList.querySelectorAll('.solved-row').forEach(row => {
+      row.style.height = h + 'px';
+    });
+  }
+}
+
 function render() {
   renderSolved();
   renderGrid();
   renderMistakes();
   renderControls();
+  syncSolvedRowHeights();
 }
 
 function renderSolved() {
@@ -196,10 +208,12 @@ function renderGrid() {
   state.tiles.forEach((t, i) => {
     if (t.solved) return; // solved tiles are shown in the bar above, not in grid
     const btn = document.createElement('button');
-    btn.className = 'tile';
     btn.type = 'button';
     btn.textContent = t.word;
     btn.dataset.idx = String(i);
+    const wlen = t.word.length;
+    const fsClass = wlen > 12 ? 'fs-xs' : wlen > 9 ? 'fs-sm' : wlen > 7 ? 'fs-md' : '';
+    btn.className = 'tile' + (fsClass ? ' ' + fsClass : '');
     if (state.selected.has(i)) btn.classList.add('selected');
     btn.addEventListener('click', () => toggleSelect(i, btn));
     grid.appendChild(btn);
@@ -379,7 +393,11 @@ function finishGame(won) {
   render();
 
   recordResult(won);
-  showEndModal();
+  if (won) {
+    showEndModal();
+  } else {
+    toast('Next time!', 2500);
+  }
 
   // If daily, the progress is now final — keep it stored so the user can
   // see results if they reopen.
@@ -691,6 +709,8 @@ $$('.menu-item').forEach(btn => {
     }
   });
 });
+
+window.addEventListener('resize', syncSolvedRowHeights);
 
 $('#archive-search-input').addEventListener('input', (e) => {
   renderArchive(e.target.value);
