@@ -164,18 +164,23 @@ function startPuzzle(puzzle, mode) {
   // Header
   modeLabel.textContent = mode === 'daily' ? 'Daily' : 'Practice';
 
+  _cachedTileHeight = 0;
   render();
 }
 
 /* ---------- Render ---------- */
 
+let _cachedTileHeight = 0;
+
 function syncSolvedRowHeights() {
   const tile = grid.querySelector('.tile');
-  if (!tile) return;
-  const h = tile.getBoundingClientRect().height;
-  if (h > 0) {
+  if (tile) {
+    const h = tile.getBoundingClientRect().height;
+    if (h > 0) _cachedTileHeight = h;
+  }
+  if (_cachedTileHeight > 0) {
     solvedList.querySelectorAll('.solved-row').forEach(row => {
-      row.style.height = h + 'px';
+      row.style.height = _cachedTileHeight + 'px';
     });
   }
 }
@@ -393,7 +398,9 @@ function finishGame(won) {
   render();
 
   recordResult(won);
-  if (won) {
+  if (won && state.mistakes === 0) {
+    toast('Perfect!', 2500);
+  } else if (won) {
     showEndModal();
   } else {
     toast('Next time!', 2500);
