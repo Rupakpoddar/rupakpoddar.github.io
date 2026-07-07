@@ -46,3 +46,9 @@
 <a href="https://rupakpoddar.github.io/Deskew/">
   <img src="https://img.shields.io/badge/Deskew-FFBF00?style=for-the-badge&logoColor=black" />
 </a>
+<br>
+
+<a href="https://rupakpoddar.github.io/SimplyCollage/">
+  <img src="https://img.shields.io/badge/Simply%20Collage-FFBF00?style=for-the-badge&logoColor=black" />
+</a>
+
