@@ -1,6 +1,6 @@
 // Service Worker — gives full offline support after first load.
 // Bump CACHE_VERSION whenever you redeploy with file changes.
-const CACHE_VERSION = 'connections-v4';
+const CACHE_VERSION = 'connections-v5';
 
 // All paths are relative to the SW location (the app root).
 const PRECACHE_URLS = [
@@ -10,13 +10,12 @@ const PRECACHE_URLS = [
   './app.js',
   './data.json',
   './manifest.webmanifest',
+  './icons/icon-32.png',
+  './icons/icon-180.png',
   './icons/icon-192.png',
   './icons/icon-512.png',
-  './icons/icon-maskable-192.png',
-  './icons/icon-maskable-512.png',
-  './icons/apple-touch-icon.png',
-  './icons/favicon-32.png',
-  './icons/favicon-64.png',
+  './icons/icon-192-maskable.png',
+  './icons/icon-512-maskable.png',
 ];
 
 self.addEventListener('install', (event) => {
